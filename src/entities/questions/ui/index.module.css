@@ -1,0 +1,71 @@
+.questions {
+  display: flex;
+  justify-content: space-between;
+  gap: 34px;
+  margin-top: 180px !important;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 50%;
+}
+
+.wrapper {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.header {
+  margin-bottom: 50px;
+}
+
+.accordion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 26px;
+  background-color: #f5f6f6;
+  padding: 26px 40px;
+  position: relative;
+  overflow: hidden;
+  transition: all 1s ease;
+  height: 74px;
+}
+
+.accordion.open {
+  height: auto;
+  max-height: 1000px;
+}
+
+/* .accordion.open div:first-child svg {
+  transform: rotate(180deg);
+} */
+
+.accordion div:first-child {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.accordion div:first-child svg {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.accordion div:first-child svg.rotated {
+  transform: rotate(0deg);
+}
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}

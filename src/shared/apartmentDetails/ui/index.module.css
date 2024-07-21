@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.main {
+  width: 70%;
+}
+
+.images {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 13%;
+}
+
+.images img {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: border 0.3s ease;
+}

@@ -1,0 +1,46 @@
+.card {
+  display: flex;
+  gap: 24px;
+}
+.grey_card {
+  padding: 30px;
+}
+
+.icon {
+  width: 86px;
+  height: 86px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 18px;
+}
+
+.titles {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 45%;
+}
+.second_title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.second_title h5 {
+  width: 55%;
+}
+
+.second_title p {
+  width: 80%;
+}

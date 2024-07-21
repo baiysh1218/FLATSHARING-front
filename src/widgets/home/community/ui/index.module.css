@@ -1,0 +1,17 @@
+.images {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bg {
+  background-color: #f5f6f6;
+  min-height: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.image {
+  margin: auto;
+}

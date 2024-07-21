@@ -1,0 +1,42 @@
+.buttons {
+  display: flex;
+  align-self: flex-start;
+  position: absolute;
+  top: 550px;
+  left: 7%;
+  gap: 10px;
+}
+.registrationForm {
+  max-height: 100vh;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+.registrationForm form {
+  position: relative;
+}
+
+.step {
+  height: 1px;
+  width: 10%;
+  background-color: red;
+}
+
+.step_wrapper {
+  display: flex;
+  gap: 5px;
+  position: absolute;
+  width: 35%;
+  bottom: 3%;
+  left: 7%;
+}
+
+.step_block {
+  background-color: grey;
+  min-height: 5px;
+  width: 20%;
+}
+
+.step_active {
+  background-color: black;
+}
