@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC } from "react";
 
 import clsx from "./ui/index.module.css";
-import { AuthFormType, StepProps } from "./model/types";
+import { StepProps } from "./model/types";
 import { Title } from "../../../shared/title/Title";
 import { Text } from "../../../shared/Text/Text";
 import { SecondTitle } from "../../../shared/secondTitle/SecondTitle";
@@ -18,6 +18,7 @@ const Step1: FC<StepProps> = ({ formData, handleChange, name, name2 }) => {
           eiusmod tempor incididunt ut labore.
         </Text>
         <Text>I already have an account. Sign In to my personal account</Text>
+        <a href="#">log in</a>
       </div>
       <div className={clsx.inputs_wrapper}>
         <SecondTitle style={{ fontFamily: "Roboto Condensed" }}>
@@ -25,6 +26,7 @@ const Step1: FC<StepProps> = ({ formData, handleChange, name, name2 }) => {
         </SecondTitle>
         <div className={clsx.inputs}>
           <Input
+            required
             type="text"
             name={name}
             // value={formData.firstName}
@@ -32,6 +34,7 @@ const Step1: FC<StepProps> = ({ formData, handleChange, name, name2 }) => {
             placeholder="First Name"
           />
           <Input
+            required
             type="text"
             name={name2}
             // value={formData.lastName}

@@ -15,7 +15,10 @@ import Steap3 from "../steps/Steap3";
 import Step4 from "../steps/Step4";
 import Step5 from "../steps/Step5";
 import ImageUploader from "../steps/ImageUploader";
-import { useRegisterMutation } from "../../../app/redux/auth/authApi";
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "../../../app/redux/auth/authApi";
 
 interface FormData {
   password: string;
@@ -24,6 +27,10 @@ interface FormData {
   is_superuser: boolean;
   is_verified: boolean;
   is_accepted: boolean;
+  firstName: string;
+  lastName: string;
+  address: string;
+  profession: string;
 }
 
 const Auth: React.FC = () => {
@@ -33,10 +40,14 @@ const Auth: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
-    is_active: false,
+    is_active: true,
     is_superuser: false,
     is_verified: false,
     is_accepted: false,
+    firstName: "",
+    lastName: "",
+    address: "",
+    profession: "",
   });
 
   const [currentStep, setCurrentStep] = useState<number>(() => {
@@ -45,8 +56,12 @@ const Auth: React.FC = () => {
     return stepId;
   });
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
   const [register, { isLoading, isError, isSuccess, data, error }] =
     useRegisterMutation();
+
+  const [login, { data: tokens }] = useLoginMutation();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -60,17 +75,50 @@ const Auth: React.FC = () => {
       ...prevData,
       [name]: value,
     }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: value ? "" : prevErrors[name],
+    }));
+  };
+
+  const validateStep = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (currentStep === 1) {
+      if (!formData.firstName) newErrors.firstName = "First name is required";
+      if (!formData.lastName) newErrors.lastName = "Last name is required";
+    } else if (currentStep === 2) {
+      if (!formData.email) newErrors.email = "Email is required";
+    } else if (currentStep === 3) {
+      if (!formData.password) newErrors.password = "Password is required";
+    } else if (currentStep === 4) {
+      if (!formData.address) newErrors.address = "Address is required";
+    } else if (currentStep === 7) {
+      if (!formData.profession) newErrors.profession = "Profession is required";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!validateStep()) return;
+    const loginData = {
+      userName: formData.firstName,
+      password: formData.password,
+    };
     try {
       await register({ user: formData }).unwrap();
+      await login({ user: loginData });
     } catch (err) {}
   };
 
   const goToStep = (step: number) => {
     navigate(`/registration?step=${step}`);
+  };
+
+  const handleNext = () => {
+    if (!validateStep()) return;
+    goToStep(currentStep + 1);
   };
 
   const renderStep = () => {
@@ -83,6 +131,7 @@ const Auth: React.FC = () => {
               handleChange={handleChange}
               name="firstName"
               name2="lastName"
+              errors={errors}
             />
           </Main>
         );
@@ -95,6 +144,7 @@ const Auth: React.FC = () => {
               titles="What’s your email?"
               placeholder="Email"
               name="email"
+              errors={errors}
             />
           </Main>
         );
@@ -105,6 +155,7 @@ const Auth: React.FC = () => {
               formData={formData}
               handleChange={handleChange}
               name="password"
+              errors={errors}
             />
           </Main>
         );
@@ -112,11 +163,12 @@ const Auth: React.FC = () => {
         return (
           <Main src={auth2}>
             <Step2
-              name="addreess"
+              name="address"
               formData={formData}
               handleChange={handleChange}
               titles="What’s your home address? Specify the country and city"
               placeholder="Enter your home address"
+              errors={errors}
             />
           </Main>
         );
@@ -136,7 +188,7 @@ const Auth: React.FC = () => {
             <Steap3
               formData={formData}
               handleChange={handleChange}
-              titles="Are you interested in participating in regular community forums dedicated to travel, visas, relocation and taxes?"
+              titles="Are you interested in participating in regular community forums dedicated to travel, visas, relocation and taxes?"
             />
           </Main>
         );
@@ -149,6 +201,7 @@ const Auth: React.FC = () => {
               handleChange={handleChange}
               placeholder="Enter your profession"
               titles="Tell us about yourself. Where do you work?"
+              errors={errors}
             />
           </Main>
         );
@@ -160,6 +213,7 @@ const Auth: React.FC = () => {
               placeholder="Enter your interests"
               formData={formData}
               handleChange={handleChange}
+              errors={errors}
             />
           </Main>
         );
@@ -190,12 +244,7 @@ const Auth: React.FC = () => {
             </Button>
           )}
           {currentStep !== 9 ? (
-            <Button
-              $bg
-              $icon
-              type="button"
-              onClick={() => goToStep(currentStep + 1)}
-            >
+            <Button $bg $icon type="button" onClick={handleNext}>
               Next
             </Button>
           ) : (

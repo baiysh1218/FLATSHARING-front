@@ -6,8 +6,10 @@ import { GreyCard } from "../../../shared/greyCard/GreyCard";
 import cup from "../../../assets/png/cap.png";
 import { SecondTitle } from "../../../shared/secondTitle/SecondTitle";
 import { Button } from "../../../shared/button/Button";
+import { useNavigate } from "react-router-dom";
 
 const Perks = () => {
+  const navigate = useNavigate();
   return (
     <div className={`container ${clsx.perks_wrapper}`}>
       <div className={clsx.titles}>
@@ -71,7 +73,12 @@ const Perks = () => {
           </div>
         </GreyCard>
       </div>
-      <Button style={{ marginTop: "40px" }} $bg $icon>
+      <Button
+        onClick={() => navigate("/registration")}
+        style={{ marginTop: "40px" }}
+        $bg
+        $icon
+      >
         Join the community
       </Button>
     </div>

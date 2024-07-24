@@ -1,5 +1,6 @@
 import Auth from "../../entities/auth/auth/Auth";
 import Details from "../../entities/details/Details";
+import Browse from "../../pages/browse/Browse";
 import Home from "../../pages/home/HomePage";
 
 export const PUBLIC_ROUTES = [
@@ -13,5 +14,11 @@ export const PUBLIC_ROUTES = [
     path: "/details/:id",
     component: Details,
     id: 3,
+  },
+
+  {
+    path: "/browse",
+    component: Browse,
+    id: 4,
   },
 ];

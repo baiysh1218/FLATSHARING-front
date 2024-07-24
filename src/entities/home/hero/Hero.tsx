@@ -13,8 +13,10 @@ import { Lessor } from "../../../shared/lessor/Lessor";
 import { LessorLeft } from "../../../shared/lessor/LessorLeft";
 import { LessorAvatar } from "../../../shared/lessor/LessorAvatar";
 import { LessorRight } from "../../../shared/lessor/LessorRight";
+import { useNavigate } from "react-router-dom";
 
 const Hero: FC = () => {
+  const navigate = useNavigate();
   return (
     <div className={`container ${clsx.hero}`}>
       <GreyCard $hero style={{ alignItems: "flex-start" }}>
@@ -24,7 +26,7 @@ const Hero: FC = () => {
           eiusmod tempor incididunt ut labore.
         </Text>
         <div className={clsx.button_group}>
-          <Button $icon $bg>
+          <Button onClick={() => navigate("/registration")} $icon $bg>
             Join the community
           </Button>
           <SecondaryText>takes only 5 minutes</SecondaryText>

@@ -18,7 +18,7 @@ const Step4: FC<StepProps> = ({
           <SecondTitle>{titles}</SecondTitle>
         </div>
         <div className={styles.step4_inputs}>
-          <TextArea name={name} placeholder={placeholder} />
+          <TextArea required name={name} placeholder={placeholder} />
         </div>
       </div>
     </div>

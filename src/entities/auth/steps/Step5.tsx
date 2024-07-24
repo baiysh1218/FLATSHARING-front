@@ -24,6 +24,7 @@ const Step5: FC<StepProps> = ({
       <div className={clsx.inputs_wrapper}>
         <div className={clsx.inputs}>
           <Input
+            required
             type={checked ? "text" : "password"}
             name="password"
             value={formData.password}
@@ -31,6 +32,7 @@ const Step5: FC<StepProps> = ({
             placeholder="Password"
           />
           <Input
+            required
             type={checked ? "text" : "password"}
             name="password"
             onChange={handleChange}

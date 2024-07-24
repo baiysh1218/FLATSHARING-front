@@ -8,8 +8,10 @@ import Kirill from "../../../assets/png/Kirill.png";
 import { SecondTitle } from "../../../shared/secondTitle/SecondTitle";
 import clsx from "./ui/index.module.css";
 import { Button } from "../../../shared/button/Button";
+import { useNavigate } from "react-router-dom";
 
 const Recoll = () => {
+  const navigate = useNavigate();
   return (
     <div className={clsx.recoll}>
       <div className="container">
@@ -60,7 +62,7 @@ const Recoll = () => {
         ))}
       </Carousel>
       <div className={`container`}>
-        <Button $icon $bg>
+        <Button onClick={() => navigate("/registration")} $icon $bg>
           Try it yourself
         </Button>
       </div>

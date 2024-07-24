@@ -7,8 +7,10 @@ import img from "../../../assets/png/howitwork.png";
 import { SecondTitle } from "../../../shared/secondTitle/SecondTitle";
 import { Text } from "../../../shared/Text/Text";
 import { Button } from "../../../shared/button/Button";
+import { useNavigate } from "react-router-dom";
 
 const HowItWork = () => {
+  const navigate = useNavigate();
   return (
     <div className="container">
       <Title style={{ textAlign: "center" }}>How it works</Title>
@@ -30,7 +32,7 @@ const HowItWork = () => {
         ))}
       </div>
       <div className={clsx.buttons}>
-        <Button $bg $icon>
+        <Button onClick={() => navigate("/registration")} $bg $icon>
           See more
         </Button>
       </div>

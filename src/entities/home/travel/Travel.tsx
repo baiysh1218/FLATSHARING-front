@@ -8,8 +8,11 @@ import clsx from "./ui/index.module.css";
 import images1 from "../../../assets/png/travel1.png";
 import images2 from "../../../assets/png/travel2.png";
 import { Button } from "../../../shared/button/Button";
+import { useNavigate } from "react-router-dom";
 
 const Travel = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={`${clsx.travel_wrapper}`}>
       <div className="container">
@@ -34,7 +37,12 @@ const Travel = () => {
             </AddressGreyWrapper>
           </GreyCard>
         </div>
-        <Button style={{ margin: "40px auto" }} $bg $icon>
+        <Button
+          onClick={() => navigate("/registration")}
+          style={{ margin: "40px auto" }}
+          $bg
+          $icon
+        >
           More about cost
         </Button>
       </div>

@@ -31,7 +31,14 @@ export const authApi = createApi({
         body: user,
       }),
     }),
+    login: builder.mutation({
+      query: ({ user }) => ({
+        url: "auth/jwt/login",
+        method: "POST",
+        body: user,
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation } = authApi;

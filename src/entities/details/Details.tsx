@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ui/index.module.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Title } from "../../shared/title/Title";
 import { ReactComponent as AddressIcon } from "../../assets/icons/adress.svg";
 import { ReactComponent as Car } from "../../assets/icons/Car.svg";
@@ -25,6 +25,7 @@ import Questions from "../questions/Questions";
 
 const Details = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   return (
     <div className={`${styles.details} container`}>
@@ -144,7 +145,12 @@ const Details = () => {
           </LessorRight>
         </Lessor>
 
-        <Button $bg $icon style={{ margin: "auto", marginBottom: "180px" }}>
+        <Button
+          onClick={() => navigate("/registration")}
+          $bg
+          $icon
+          style={{ margin: "auto", marginBottom: "180px" }}
+        >
           Contact the owner
         </Button>
       </div>

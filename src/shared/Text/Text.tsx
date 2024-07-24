@@ -8,5 +8,5 @@ export const Text = styled.p<TextProps>`
   line-height: 22px;
   width: ${(props) => (props.width ? props.width : "")};
   align-self: flex-start;
-  text-decoration: ${(props) => (props.$through ? "line-through" : "none")};
+  text-decoration: ${(props) => (props.$through ? "" : "none")};
 `;

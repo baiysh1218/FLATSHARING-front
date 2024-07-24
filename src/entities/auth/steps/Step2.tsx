@@ -20,6 +20,7 @@ const Step2: FC<StepProps> = ({
       </div>
       <div className={styles.inputs_wrapper}>
         <Input
+          required
           placeholder={placeholder}
           type="text"
           name={name}

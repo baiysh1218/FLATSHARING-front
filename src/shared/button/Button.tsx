@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ButtonProps } from "./model/types";
-import arrow from "../../assets/icons/arrow.png";
+import arrow from "../../assets/icons/arraowButton.svg";
 
 export const Button = styled.button<ButtonProps>`
   padding: ${(props) =>
@@ -23,16 +23,14 @@ export const Button = styled.button<ButtonProps>`
     `
     &::after {
       content: url(${arrow});
-      margin-left: 8px;
+      margin-left: 12px;
       background-color: white;
       width: 48px;
       height: 48px;
-      display: inline-block;
       border-radius: 50%;
-      object-fit: contain;
       display: flex;
-  align-items: center;
-  justify-content: center;
+      align-items: center;
+      justify-content: center;
     }
   `};
 `;

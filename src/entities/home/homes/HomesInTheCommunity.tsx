@@ -9,8 +9,10 @@ import { Button } from "../../../shared/button/Button";
 import { AddressGreyWrapper } from "../../../shared/addressGreyWrapperProps/AddressGreyWrapperProps";
 import { AddressTitle } from "../../../shared/addressTitle/AddressTitle";
 import img3 from "../../../assets/png/img3.png";
+import { useNavigate } from "react-router-dom";
 
 const HomesInTheCommunity = () => {
+  const navigate = useNavigate();
   return (
     <div className={clsx.main_wrapper}>
       <div className={`container ${clsx.title_wrapper}`}>
@@ -50,7 +52,7 @@ const HomesInTheCommunity = () => {
             </div>
           ))}
         </div>
-        <Button $bg $icon>
+        <Button onClick={() => navigate("/registration")} $bg $icon>
           Browse apartments
         </Button>
       </div>

@@ -16,6 +16,7 @@ export interface StepProps {
   placeholder?: string;
   name?: string;
   name2?: string;
+  errors?: { [key: string]: string };
 }
 
 export type MainProps = {

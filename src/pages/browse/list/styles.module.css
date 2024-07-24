@@ -1,0 +1,29 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  max-width: 48%;
+  background-color: #f5f6f6;
+  border-radius: 26px;
+}
+.card div {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.card div div {
+  flex-direction: column;
+  gap: 10px;
+}
+.card div div p span {
+  background-color: white;
+  margin-left: 10px;
+  border-radius: 12px;
+  padding: 4px 8px 4px 8px;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
