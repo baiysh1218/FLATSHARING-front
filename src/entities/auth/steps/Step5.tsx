@@ -1,56 +1,57 @@
-import React, { FC, useState } from "react";
-import { StepProps } from "./model/types";
+import React, { ChangeEvent, FC } from "react";
+
 import clsx from "./ui/index.module.css";
+import { StepProps } from "./model/types";
 import { Text } from "../../../shared/Text/Text";
 import { SecondTitle } from "../../../shared/secondTitle/SecondTitle";
 import { Input } from "../../../shared/input/Input";
+// import { Step1Props } from "./model/types";
 
-const Step5: FC<StepProps> = ({
-  titles,
-  placeholder,
-  handleChange,
+const Step2: FC<StepProps> = ({
   formData,
+  handleChange,
+  name,
+  name2,
+  errors,
 }) => {
-  const [checked, setChecked] = useState<boolean>(false);
   return (
-    <div className={clsx.step1_wrapper}>
-      <div className={clsx.step1_titles}>
-        <SecondTitle>Create a password for your account</SecondTitle>
-        <Text>
-          Come up with a strong password consisting of letters, numbers
-          and other symbols.
-        </Text>
-      </div>
+    <div style={{ marginTop: "20%" }} className={clsx.step1_wrapper}>
       <div className={clsx.inputs_wrapper}>
+        <SecondTitle style={{ fontFamily: "Roboto Condensed" }}>
+          What’s your name?
+        </SecondTitle>
         <div className={clsx.inputs}>
           <Input
             required
-            type={checked ? "text" : "password"}
-            name="password"
-            value={formData.password}
+            $error={errors?.firstName ? true : false}
+            type="text"
+            name={name}
+            value={formData.firstName}
             onChange={handleChange}
-            placeholder="Password"
+            placeholder="First Name"
           />
+
           <Input
             required
-            type={checked ? "text" : "password"}
-            name="password"
+            $error={errors?.lastName ? true : false}
+            type="text"
+            name={name2}
+            value={formData.lastName}
             onChange={handleChange}
-            placeholder="Confirm"
+            placeholder="Last Name"
           />
-          <div className={clsx.check}>
-            <input
-              onChange={() => setChecked(!checked)}
-              type="checkbox"
-              name=""
-              id="chekc"
-            />
-            <label htmlFor="chekc">Show password</label>
-          </div>
+        </div>
+        <div className={clsx.inputs_errors}>
+          <Text style={{ color: "red", fontSize: "14px", width: "100%" }}>
+            {errors?.firstName ? errors.firstName : ""}
+          </Text>
+          <Text style={{ color: "red", fontSize: "14px", width: "100%" }}>
+            {errors?.lastName ? errors.lastName : ""}
+          </Text>
         </div>
       </div>
     </div>
   );
 };
 
-export default Step5;
+export default Step2;

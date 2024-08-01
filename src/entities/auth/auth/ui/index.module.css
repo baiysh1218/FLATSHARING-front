@@ -3,7 +3,7 @@
   align-self: flex-start;
   position: absolute;
   top: 550px;
-  left: 7%;
+  /*left: 7%;*/
   gap: 10px;
 }
 .registrationForm {
@@ -28,7 +28,7 @@
   position: absolute;
   width: 35%;
   bottom: 3%;
-  left: 7%;
+  /*left: 7%;*/
 }
 
 .step_block {

@@ -5,7 +5,7 @@ import { Logo } from "../../../shared/logo/Logo";
 
 const Main: FC<MainProps> = ({ children, src }) => {
   return (
-    <div className={`${clsx.main_wrapper} container`}>
+    <div className={`${clsx.main_wrapper}`}>
       <div className={clsx.main_left}>
         <Logo>
           <span>flat</span>

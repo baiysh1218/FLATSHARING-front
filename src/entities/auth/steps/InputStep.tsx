@@ -6,49 +6,44 @@ import { Input } from "../../../shared/input/Input";
 import { Title } from "../../../shared/title/Title";
 import { Text } from "../../../shared/Text/Text";
 
-const Step1: FC<StepProps> = ({
+const InputStep: FC<StepProps> = ({
   formData,
+  value,
   handleChange,
   placeholder,
   titles,
   name,
   errors,
 }) => {
+  const hasError: boolean = !!(
+    errors &&
+    errors[name] &&
+    errors[name].trim() !== ""
+  );
+  console.log(errors, hasError);
   return (
-    <div className={styles.step2_wrapper}>
+    <div className={styles.input_step_wrapper}>
       <div className={styles.step1_titles}>
-        <Title>Registration</Title>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore.
-        </Text>
-        <Text>
-          I already have an account.{" "}
-          <a href="" style={{ textDecoration: "underline" }}>
-            Sign In
-          </a>{" "}
-          to my personal account
-        </Text>
         <SecondTitle style={{ fontFamily: "Roboto Condensed" }}>
           {titles}
         </SecondTitle>
       </div>
       <div className={styles.inputs_wrapper}>
         <Input
-          $error={errors?.email ? true : false}
+          $error={hasError}
           required
           placeholder={placeholder}
-          value={formData.email}
+          value={value}
           type="text"
           name={name}
           onChange={handleChange}
         />
-        <Text style={{ color: "red", fontSize: "14px" }}>
-          {errors?.email ? errors.email : ""}
-        </Text>
+        {hasError && errors && (
+          <Text style={{ color: "red", fontSize: "14px" }}>{errors[name]}</Text>
+        )}
       </div>
     </div>
   );
 };
 
-export default Step1;
+export default InputStep;
