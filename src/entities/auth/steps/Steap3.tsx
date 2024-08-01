@@ -15,7 +15,7 @@ const Steap3: FC<StepProps> = ({ formData, handleChange, titles }) => {
         </div>
         <div className={styles.step3_radio}>
           <div>
-            <input type="radio" name="Yes" id="" />
+            <input checked type="radio" name="Yes" id="" />
             <p>Yes</p>
           </div>
           <div>

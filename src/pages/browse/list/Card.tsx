@@ -9,9 +9,17 @@ interface Props {
 }
 
 const BrowseCard: FC<Props> = ({ item }) => {
+  console.log(item);
   return (
     <div className={styles.card}>
-      <img src={images} alt="" />
+      <img
+        src={
+          item.used_listing_pictures[0]
+            ? item.used_listing_pictures[0].picture_url
+            : images
+        }
+        alt=""
+      />
       <div>
         <div>
           <p>
@@ -23,7 +31,7 @@ const BrowseCard: FC<Props> = ({ item }) => {
           </p>
         </div>
         <div>
-          <p>75$/night</p>
+          <p>{item.price}</p>
         </div>
       </div>
     </div>

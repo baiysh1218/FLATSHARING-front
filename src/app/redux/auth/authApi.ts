@@ -10,6 +10,7 @@ interface User {
 }
 
 interface RegisterResponse {
+  id: string;
   password: string;
   email: string;
   is_active: boolean;

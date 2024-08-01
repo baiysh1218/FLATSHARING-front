@@ -71,7 +71,7 @@ const BrowseApartments = () => {
           style={{ maxHeight: "64px", alignSelf: "flex-end" }}
           onClick={() => navigate("/registration")}
         >
-          Book now
+          Search
         </Button>
       </div>
     </div>

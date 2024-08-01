@@ -6,8 +6,12 @@ interface Props {
 }
 
 const BrowseList: FC<Props> = ({ data }) => {
+  console.log(data);
   return (
-    <div className={styles.list}>
+    <div
+      style={{ marginBottom: "100px" }}
+      className={`${styles.list} container`}
+    >
       {data?.map((item: any) => (
         <BrowseCard item={item} />
       ))}

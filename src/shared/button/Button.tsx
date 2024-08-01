@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ButtonProps } from "./model/types";
 import arrow from "../../assets/icons/arraowButton.svg";
+import arrowBlack from "../../assets/icons/arrow-black.svg";
 
 export const Button = styled.button<ButtonProps>`
   padding: ${(props) =>
@@ -13,18 +14,16 @@ export const Button = styled.button<ButtonProps>`
   justify-content: center;
   min-height: ${(props) => (props.$border ? "53px" : "64px")};
   cursor: pointer;
-
   border: ${(props) => (props.$border ? "1px solid #282828" : "none")};
-
   font-size: ${(props) => (props.$border || !props.$bg ? "18px" : "24px")};
 
   ${(props) =>
     props.$icon &&
     `
     &::after {
-      content: url(${arrow});
+      content: ${props.$iconColor ? `url(${arrowBlack})` : `url(${arrow})`};
       margin-left: 12px;
-      background-color: white;
+      background-color: ${props.$iconColor ? "black" : "white"};
       width: 48px;
       height: 48px;
       border-radius: 50%;
