@@ -1,0 +1,23 @@
+.romms_wrapper {
+  display: flex;
+  max-width: 220px;
+  gap: 14px;
+}
+
+.romms_wrapper button {
+  width: 52px;
+  height: 52px;
+}
+
+.romms_wrapper input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: default;
+}
+
+.romms_wrapper input:focus {
+  outline: none;
+}

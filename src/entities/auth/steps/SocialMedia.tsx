@@ -33,8 +33,10 @@ const SocialMedia: FC<StepProps> = ({
         </Text>
       </div>
       <div className={styles.one_input}>
-        <SecondTitle style={{ fontSize: "16px" }}>Instagram</SecondTitle>
-        <Text>not added</Text>
+        <SecondTitle fz="16px" style={{ width: "30%" }}>
+          Instagram
+        </SecondTitle>
+        <input type="text" placeholder="Not added" />
         <Button
           $bg
           style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}
@@ -43,8 +45,10 @@ const SocialMedia: FC<StepProps> = ({
         </Button>
       </div>
       <div className={styles.one_input}>
-        <SecondTitle style={{ fontSize: "16px" }}>LinkedIn</SecondTitle>
-        <Text>not added</Text>
+        <SecondTitle fz="16px" style={{ width: "30%" }}>
+          LinkedIn
+        </SecondTitle>
+        <input type="text" placeholder="Not added" />
         <Button
           $bg
           style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}

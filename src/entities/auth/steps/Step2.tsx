@@ -16,7 +16,7 @@ const Step2: FC<StepProps> = ({
   return (
     <div className={clsx.step1_wrapper}>
       <div className={clsx.step1_titles}>
-        <SecondTitle>Create a password for your account</SecondTitle>
+        <SecondTitle fz="22px">Create a password for your account</SecondTitle>
         <Text>
           Come up with a strong password consisting of letters, numbers
           and other symbols.

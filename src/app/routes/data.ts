@@ -1,5 +1,6 @@
 import Auth from "../../entities/auth/auth/Auth";
 import Details from "../../entities/details/Details";
+import AddFlat from "../../pages/addFlat/AddFlat";
 import Browse from "../../pages/browse/Browse";
 import Home from "../../pages/home/HomePage";
 
@@ -20,5 +21,10 @@ export const PUBLIC_ROUTES = [
     path: "/browse",
     component: Browse,
     id: 4,
+  },
+  {
+    path: "/add_apartmants",
+    component: AddFlat,
+    id: 5,
   },
 ];

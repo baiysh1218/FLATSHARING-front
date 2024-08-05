@@ -1,10 +1,13 @@
-import React, { FC, ChangeEvent } from "react";
+import React, { FC, ChangeEvent, useState } from "react";
 import { StepProps } from "./model/types";
 import styles from "./ui/index.module.css";
 import { SecondTitle } from "../../../shared/secondTitle/SecondTitle";
 import { Input } from "../../../shared/input/Input";
 import { Title } from "../../../shared/title/Title";
 import { Text } from "../../../shared/Text/Text";
+import { Modal } from "../../../shared/modal/model/model";
+import LoginModal from "../../../shared/modal/LoginModal";
+import { Linked } from "../../../shared/Linked/Linked";
 
 const Step1: FC<StepProps> = ({
   formData,
@@ -14,6 +17,7 @@ const Step1: FC<StepProps> = ({
   name,
   errors,
 }) => {
+  const [modal, setModal] = useState<boolean>(false);
   return (
     <div className={styles.step2_wrapper}>
       <div className={styles.step1_titles}>
@@ -22,14 +26,17 @@ const Step1: FC<StepProps> = ({
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore.
         </Text>
-        <Text>
+        <Text style={{ display: "flex", gap: "3px" }}>
           I already have an account.{" "}
-          <a href="" style={{ textDecoration: "underline" }}>
+          <Linked
+            onClick={() => setModal(true)}
+            style={{ textDecoration: "underline" }}
+          >
             Sign In
-          </a>{" "}
+          </Linked>{" "}
           to my personal account
         </Text>
-        <SecondTitle style={{ fontFamily: "Roboto Condensed" }}>
+        <SecondTitle fz="22px" style={{ fontFamily: "Roboto Condensed" }}>
           {titles}
         </SecondTitle>
       </div>
@@ -47,6 +54,9 @@ const Step1: FC<StepProps> = ({
           {errors?.email ? errors.email : ""}
         </Text>
       </div>
+      <Modal>
+        <LoginModal modal={modal} setModal={setModal} />
+      </Modal>
     </div>
   );
 };
