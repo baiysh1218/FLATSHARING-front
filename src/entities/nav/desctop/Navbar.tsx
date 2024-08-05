@@ -24,12 +24,13 @@ const Navbar = () => {
                 <span>flat</span>
                 <span>sharing</span>
               </Logo>
+              <Linked onClick={() => navigate("/browse")} $size="18px">
+                Browse apartments
+              </Linked>
               <Linked $size="18px">How it works</Linked>
-              <Linked $size="18px">Browse apartments</Linked>
-              <Linked $size="18px">Cost</Linked>
             </div>
             <div>
-              <Button $fz="18px">
+              <Button onClick={() => navigate("/account/myads")} $fz="18px">
                 <img
                   src={userIcon}
                   alt="user icon"

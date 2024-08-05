@@ -22,87 +22,89 @@ import { LessorRight } from "../../shared/lessor/LessorRight";
 import { SecondTitle } from "../../shared/secondTitle/SecondTitle";
 import { Button } from "../../shared/button/Button";
 import Questions from "../questions/Questions";
+import { useGetOneFlatQuery } from "../../app/redux/product/apiProducts";
 
 const Details = () => {
   const { id } = useParams();
+  const { data } = useGetOneFlatQuery({ id });
+  console.log(data);
   const navigate = useNavigate();
 
   return (
     <div className={`${styles.details} container`}>
-      <div className={styles.header_details}>
-        <Title>Cozy apartments in the San Blas area</Title>
-        <div>
-          <AddressIcon />
-          <span>Calle de Estocolmo 1, San Blas, 12345 Madrid, Spain</span>
-        </div>
-        <div>
-          <span>1 room</span>
-          <li>Jun</li>
-          <li>Jul</li>
-        </div>
-      </div>
-      <div className={styles.content}>
-        <ApartmentDetails />
-        <div className={styles.text_content}>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-            do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-            enim ad minim veniam. Sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam.
-          </Text>
-          <div className={styles.date}>
-            <p>
-              Departure date: <span>Jun, 25</span>
-            </p>
-            <p>
-              Return to the apartment: <span>Jul, 10</span>
-            </p>
-          </div>
-          <hr />
-          <div className={styles.service}>
-            <p>Amenities</p>
-            <div className={styles.service_item}>
-              <ul>
-                <li>
-                  <Car />
-                  Dedicated parking
-                </li>
-                <li>
-                  <WiFi />
-                  Wi-Fi
-                </li>
-                <li>
-                  <Cloud />
-                  Air conditioning
-                </li>
-              </ul>
-              <ul>
-                <li>
-                  <TV />
-                  TV
-                </li>
-                <li>
-                  <Speaker />
-                  On-site laundry
-                </li>
-                <li>
-                  <Gym />
-                  On-site gym
-                </li>
-              </ul>
+      {data && (
+        <>
+          <div className={styles.header_details}>
+            <Title>Cozy apartments in the San Blas area</Title>
+            <div>
+              <AddressIcon />
+              <span>
+                {data?.country}, {data.city}
+              </span>
             </div>
-            <hr />
-            <div className={styles.price}>
-              <p>
-                Cost: <span>75$/night</span>
-              </p>
+            <div>
+              <span>1 room</span>
+              <li>Jun</li>
+              <li>Jul</li>
             </div>
           </div>
-        </div>
-      </div>
+          <div className={styles.content}>
+            <ApartmentDetails images={data.used_listing_pictures} />
+            <div className={styles.text_content}>
+              <Text>{data.description}</Text>
+              <div className={styles.date}>
+                <p>
+                  Departure date: <span>{data.date_from}</span>
+                </p>
+                <p>
+                  Return to the apartment: <span>{data.date_to}</span>
+                </p>
+              </div>
+              <hr />
+              <div className={styles.service}>
+                <p>Amenities</p>
+                <div className={styles.service_item}>
+                  <ul>
+                    <li>
+                      <Car />
+                      Dedicated parking
+                    </li>
+                    <li>
+                      <WiFi />
+                      Wi-Fi
+                    </li>
+                    <li>
+                      <Cloud />
+                      Air conditioning
+                    </li>
+                  </ul>
+                  <ul>
+                    <li>
+                      <TV />
+                      TV
+                    </li>
+                    <li>
+                      <Speaker />
+                      On-site laundry
+                    </li>
+                    <li>
+                      <Gym />
+                      On-site gym
+                    </li>
+                  </ul>
+                </div>
+                <hr />
+                <div className={styles.price}>
+                  <p>
+                    Cost: <span>{data.price}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       <div>
         <Lessor
           style={{

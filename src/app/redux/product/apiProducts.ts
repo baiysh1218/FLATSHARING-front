@@ -45,7 +45,10 @@ export const productsApi = createApi({
   }),
   endpoints: (builder) => ({
     listing: builder.query({
-      query: () => "/listings?offset=1&limit=10",
+      query: ({ offset }) => `/listings?offset=${offset}&limit=10`,
+    }),
+    getOneFlat: builder.query({
+      query: ({ id }) => `/listings/${id}`,
     }),
     addFlat: builder.mutation({
       query: (data: unknown) => ({
@@ -57,4 +60,5 @@ export const productsApi = createApi({
   }),
 });
 
-export const { useListingQuery, useAddFlatMutation } = productsApi;
+
+export const { useListingQuery, useGetOneFlatQuery } = productsApi;
