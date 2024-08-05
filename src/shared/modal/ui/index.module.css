@@ -1,0 +1,116 @@
+.modal {
+  position: fixed;
+  z-index: 50;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(40, 40, 40, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.active {
+  opacity: 1;
+  pointer-events: all;
+  transition: 0.3s;
+}
+
+.content_wrapper {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  padding: 40px 0;
+  background: white;
+  animation: sideIn 1s;
+}
+
+@keyframes sideIn {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.content {
+  position: relative;
+  width: 85%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.close_icon {
+  align-self: flex-end;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.close_icon:hover {
+  transition: 0.3s;
+  background-color: rgb(240, 240, 240);
+}
+
+.errors {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  padding: 45px 0px;
+  background-color: #f5f6f6;
+  z-index: 30;
+}
+.errors div {
+  width: 85%;
+  margin: 0 auto;
+  font-weight: 500;
+}
+
+.content_block {
+  width: 70%;
+  margin-bottom: 50px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.check_block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.check_block p:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.check {
+  display: flex;
+  gap: 8px;
+}
+.check input {
+  cursor: pointer;
+}
+
+.link {
+  display: flex;
+  gap: 5px;
+}

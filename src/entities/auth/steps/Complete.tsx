@@ -17,7 +17,7 @@ const Complete: FC<StepProps> = ({
   return (
     <div className={styles.step2_wrapper}>
       <div style={{ marginTop: "15%" }} className={styles.step1_titles}>
-        <SecondTitle style={{ fontSize: "40px", marginBottom: "30px" }}>
+        <SecondTitle fz="40px" style={{ marginBottom: "30px" }}>
           Application complete!
         </SecondTitle>
         <Text>

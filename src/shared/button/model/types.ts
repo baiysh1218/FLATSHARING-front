@@ -3,4 +3,5 @@ export type ButtonProps = {
   $bg?: boolean;
   $icon?: boolean;
   $iconColor?: boolean;
+  $fz?: string;
 };

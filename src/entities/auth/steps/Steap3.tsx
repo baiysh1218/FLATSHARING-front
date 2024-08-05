@@ -15,15 +15,33 @@ const Steap3: FC<StepProps> = ({ formData, handleChange, titles }) => {
         </div>
         <div className={styles.step3_radio}>
           <div>
-            <input checked type="radio" name="Yes" id="" />
+            <input
+              type="radio"
+              name="want_to_let"
+              value="Yes"
+              checked={formData.want_to_let === "Yes"}
+              onChange={handleChange}
+            />
             <p>Yes</p>
           </div>
           <div>
-            <input type="radio" name="No" id="" />
+            <input
+              type="radio"
+              name="want_to_let"
+              value="No"
+              checked={formData.want_to_let === "No"}
+              onChange={handleChange}
+            />
             <p>No</p>
           </div>
           <div>
-            <input type="radio" name="I haven't decided yet" id="" />
+            <input
+              type="radio"
+              name="want_to_let"
+              value="I haven't decided yet"
+              checked={formData.want_to_let === "I haven't decided yet"}
+              onChange={handleChange}
+            />
             <p>I haven't decided yet</p>
           </div>
         </div>

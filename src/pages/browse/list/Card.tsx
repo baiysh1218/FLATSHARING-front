@@ -9,7 +9,6 @@ interface Props {
 }
 
 const BrowseCard: FC<Props> = ({ item }) => {
-  console.log(item);
   return (
     <div className={styles.card}>
       <img
