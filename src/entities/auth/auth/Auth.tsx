@@ -16,6 +16,8 @@ import Step4 from "../steps/Step4";
 import Step5 from "../steps/Step5";
 import ImageUploader from "../steps/ImageUploader";
 import {
+  useEditUserInfoMutation,
+  useGetUserQuery,
   useLoginMutation,
   useRegisterMutation,
 } from "../../../app/redux/auth/authApi";
@@ -23,6 +25,7 @@ import InputStep from "../steps/InputStep";
 import Complete from "../steps/Complete";
 import { Text } from "../../../shared/Text/Text";
 import SocialMedia from "../steps/SocialMedia";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 interface FormData {
   id: string;
@@ -33,6 +36,7 @@ interface FormData {
   is_superuser: boolean;
   is_verified: boolean;
   is_accepted: boolean;
+  want_to_let: string;
   firstName: string;
   lastName: string;
   address: string;
@@ -52,6 +56,8 @@ const Auth: React.FC = () => {
     is_superuser: false,
     is_verified: false,
     is_accepted: false,
+    want_to_let: "Yes",
+
     firstName: "",
     lastName: "",
     address: "",
@@ -66,10 +72,13 @@ const Auth: React.FC = () => {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const [register, { isLoading, isError, isSuccess, data, error }] =
+  const [register, { isLoading, isError, isSuccess, error }] =
     useRegisterMutation();
+  const [edit, {}] = useEditUserInfoMutation();
 
   const [login, { data: tokens }] = useLoginMutation();
+  const { data } = useGetUserQuery({});
+  console.log("data", data);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -141,12 +150,24 @@ const Auth: React.FC = () => {
       console.log(res);
       console.log(res2);
 
-      if (res.data) {
+      if (res.error && "data" in res.error) {
+        const newErrors: { [key: string]: string } = {};
+        const fetchError = res.error as FetchBaseQueryError;
+        const errorData = res.error.data as { detail?: string };
+        if (errorData.detail === "REGISTER_USER_ALREADY_EXISTS") {
+          newErrors.email = "This email is already exists";
+          setErrors(newErrors);
+          navigate("/registration?step=1");
+        }
+      } else if (res.data) {
         setFormData((prevData) => ({
           ...prevData,
           id: res.data.id,
         }));
         handleNext();
+      }
+      if (res2.data) {
+        localStorage.setItem("token", res2.data.access_token);
       }
     } catch (err) {
       console.error(err);
@@ -154,13 +175,32 @@ const Auth: React.FC = () => {
   };
   console.log(formData);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleEdit = async () => {
     if (!validateStep()) return;
-
+    const editedData = {
+      full_name: `${formData.firstName} ${formData.lastName}`,
+      how_did_you_hear: "",
+      tg_id: null,
+      onboarding_step: null,
+      onboarding_completed: false,
+      tg_username: "",
+      whatsapp: null,
+      instagram: null,
+      linkedin: null,
+      description: formData.profession,
+      picture_url: null,
+      where_to_rent: formData.address,
+      where_to_let: formData.want_to_let,
+      meet: false,
+      notifications: true,
+      contact_email: null,
+      blocked_timestamp: null,
+      bot_name: "",
+      user_id: data.user_id,
+    };
     try {
-      console.log(formData);
-      await register({ user: formData }).unwrap();
+      const res = await edit({ user: editedData });
+      console.log(res);
     } catch (err) {}
   };
 
@@ -314,10 +354,10 @@ const Auth: React.FC = () => {
 
   return (
     <div className={`${clsx.registrationForm} container`}>
-      <form onSubmit={handleSubmit}>
+      <form>
         {renderStep()}
         <div className={`${clsx.buttons}`}>
-          {currentStep !== 1 && currentStep <= 9 && (
+          {currentStep !== 1 && currentStep < 9 && (
             <Button
               $border
               type="button"
@@ -343,17 +383,19 @@ const Auth: React.FC = () => {
               Next
             </Button>
           ) : currentStep == 9 ? (
-            <Button $border $icon $iconColor type="submit" onClick={handleNext}>
-              Join the community
+            <Button $border $icon $iconColor type="button" onClick={handleNext}>
+              Do it later
             </Button>
           ) : currentStep == 10 ? (
             <div style={{ display: "flex", flexDirection: "column" }}>
               <Button
-                onClick={handleNext}
+                onClick={() => {
+                  handleEdit();
+                }}
                 style={{ marginBottom: "20px" }}
                 $bg
                 $icon
-                type="submit"
+                type="button"
               >
                 Try 7 Days for 0$
               </Button>

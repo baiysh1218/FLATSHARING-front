@@ -5,6 +5,7 @@ import BrowseList from "./list/BrowseList";
 
 const Browse = () => {
   const { data } = useListingQuery({});
+  console.log(data);
 
   return (
     <div>

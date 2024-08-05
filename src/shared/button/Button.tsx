@@ -5,7 +5,7 @@ import arrowBlack from "../../assets/icons/arrow-black.svg";
 
 export const Button = styled.button<ButtonProps>`
   padding: ${(props) =>
-    props.$border ? "16px 24px 16px 24px" : "8px 8px 8px 26px"};
+    props.$border ? "8px 24px 8px 26px" : "8px 8px 8px 26px"};
   border-radius: 33px;
   background-color: ${(props) => (props.$bg ? "#282828" : "transparent")};
   color: ${(props) => (props.$bg ? "white" : "#282828")};
@@ -15,7 +15,7 @@ export const Button = styled.button<ButtonProps>`
   min-height: ${(props) => (props.$border ? "53px" : "64px")};
   cursor: pointer;
   border: ${(props) => (props.$border ? "1px solid #282828" : "none")};
-  font-size: ${(props) => (props.$border || !props.$bg ? "18px" : "24px")};
+  font-size: ${(props) => (props.$fz ? props.$fz : "24px")};
 
   ${(props) =>
     props.$icon &&

@@ -51,8 +51,14 @@
   align-items: center;
   justify-content: space-between;
 }
+
 .one_input p {
   align-self: center;
+}
+.one_input input {
+  border: none;
+  outline: none;
+  font-size: 16px;
 }
 
 .inputs_errors {

@@ -7,6 +7,7 @@ export type AuthFormType = {
   is_active: boolean;
   is_superuser: boolean;
   is_verified: boolean;
+  want_to_let: string;
   is_accepted: boolean;
   firstName: string;
   lastName: string;

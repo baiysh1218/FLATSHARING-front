@@ -1,4 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {
+  createApi,
+  fetchBaseQuery,
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+} from "@reduxjs/toolkit/query/react";
+import useAuth from "../../helpers/hooks/UseAuth";
 
 interface User {
   password: string;
@@ -19,11 +26,34 @@ interface RegisterResponse {
   is_accepted: boolean;
 }
 
+const BaseQueryWithAuth: BaseQueryFn<
+  string | FetchArgs,
+  unknown,
+  FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+  let result;
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    result = await fetchBaseQuery({
+      baseUrl: "https://api.flatsharingcommunity.com/",
+      prepareHeaders: (headers) => {
+        headers.set("Authorization", `Bearer ${token}`);
+        return headers;
+      },
+    })(args, api, extraOptions);
+  } else {
+    result = await fetchBaseQuery({
+      baseUrl: "https://api.flatsharingcommunity.com/",
+    })(args, api, extraOptions);
+  }
+
+  return result;
+};
+
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.flatsharingcommunity.com/",
-  }),
+  baseQuery: BaseQueryWithAuth,
   endpoints: (builder) => ({
     register: builder.mutation<RegisterResponse, { user: User }>({
       query: ({ user }) => ({
@@ -39,7 +69,22 @@ export const authApi = createApi({
         body: user,
       }),
     }),
+    editUserInfo: builder.mutation({
+      query: ({ user }) => ({
+        url: "user_infos/me",
+        method: "PATCH",
+        body: user,
+      }),
+    }),
+    getUser: builder.query({
+      query: () => "/user_infos/me",
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useEditUserInfoMutation,
+  useGetUserQuery,
+} = authApi;
