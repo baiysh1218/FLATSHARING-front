@@ -3,14 +3,20 @@ import React, { FC } from "react";
 import images from "../../../assets/png/travel1.png";
 
 import styles from "./styles.module.css";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   item: any;
 }
 
 const BrowseCard: FC<Props> = ({ item }) => {
+  console.log(item);
+  const navigate = useNavigate();
   return (
-    <div className={styles.card}>
+    <div
+      onClick={() => navigate(`/details/${item.listing_id}`)}
+      className={styles.card}
+    >
       <img
         src={
           item.used_listing_pictures[0]

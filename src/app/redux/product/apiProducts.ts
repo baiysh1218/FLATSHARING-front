@@ -44,9 +44,12 @@ export const productsApi = createApi({
   }),
   endpoints: (builder) => ({
     listing: builder.query({
-      query: () => "/listings?offset=1&limit=10",
+      query: ({ offset }) => `/listings?offset=${offset}&limit=10`,
+    }),
+    getOneFlat: builder.query({
+      query: ({ id }) => `/listings/${id}`,
     }),
   }),
 });
 
-export const { useListingQuery } = productsApi;
+export const { useListingQuery, useGetOneFlatQuery } = productsApi;
