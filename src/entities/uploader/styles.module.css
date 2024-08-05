@@ -1,0 +1,15 @@
+.imagePreview {
+  width: 193px;
+  height: 228px;
+  object-fit: cover;
+  border-radius: 26px;
+}
+.uploader {
+  width: 193px;
+  height: 228px;
+  background-color: #f5f6f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 26px;
+}

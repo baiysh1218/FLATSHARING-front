@@ -53,7 +53,10 @@ const BaseQueryWithAuth: BaseQueryFn<
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: BaseQueryWithAuth,
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.REACT_APP_FLAT_API,
+  }),
+
   endpoints: (builder) => ({
     register: builder.mutation<RegisterResponse, { user: User }>({
       query: ({ user }) => ({

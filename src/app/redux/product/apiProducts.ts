@@ -5,6 +5,7 @@ import {
   FetchArgs,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
+import { url } from "inspector";
 
 const BaseQueryWithAuth: BaseQueryFn<
   string | FetchArgs,
@@ -17,7 +18,7 @@ const BaseQueryWithAuth: BaseQueryFn<
 
   if (token) {
     result = await fetchBaseQuery({
-      baseUrl: "https://api.flatsharingcommunity.com/",
+      baseUrl: process.env.REACT_APP_FLAT_API,
       prepareHeaders: (headers) => {
         headers.set("Authorization", `Bearer ${token}`);
         return headers;
@@ -25,7 +26,7 @@ const BaseQueryWithAuth: BaseQueryFn<
     })(args, api, extraOptions);
   } else {
     result = await fetchBaseQuery({
-      baseUrl: "https://api.flatsharingcommunity.com/",
+      baseUrl: process.env.REACT_APP_FLAT_API,
     })(args, api, extraOptions);
   }
 
@@ -36,7 +37,7 @@ const token = localStorage.getItem("token");
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.flatsharingcommunity.com/",
+    baseUrl: process.env.REACT_APP_FLAT_API,
     prepareHeaders: (headers) => {
       headers.set("Authorization", `Bearer ${token}`);
       return headers;
@@ -49,7 +50,15 @@ export const productsApi = createApi({
     getOneFlat: builder.query({
       query: ({ id }) => `/listings/${id}`,
     }),
+    addFlat: builder.mutation({
+      query: (data: unknown) => ({
+        url: "/listings",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
+
 
 export const { useListingQuery, useGetOneFlatQuery } = productsApi;
