@@ -27,7 +27,7 @@ const tokens: { access_token: string; token_type: string } = {
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.flatsharingcommunity.com/",
+    baseUrl: process.env.REACT_APP_FLAT_API,
     prepareHeaders: (headers) => {
       headers.set("Authorization", `Bearer ${tokens.access_token}`);
       return headers;

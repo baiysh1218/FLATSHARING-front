@@ -22,7 +22,7 @@ interface RegisterResponse {
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.flatsharingcommunity.com/",
+    baseUrl: process.env.REACT_APP_FLAT_API,
   }),
   endpoints: (builder) => ({
     register: builder.mutation<RegisterResponse, { user: User }>({
