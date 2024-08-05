@@ -60,5 +60,5 @@ export const productsApi = createApi({
   }),
 });
 
-
-export const { useListingQuery, useGetOneFlatQuery } = productsApi;
+export const { useListingQuery, useGetOneFlatQuery, useAddFlatMutation } =
+  productsApi;
