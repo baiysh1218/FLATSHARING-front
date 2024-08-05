@@ -47,7 +47,7 @@ const HomesInTheCommunity = () => {
               <AddressGreyWrapper>
                 <AddressTitle>Central London</AddressTitle>
                 <Text $through>130$+/night Airbnb</Text>
-                <Text $through>60$/night</Text>
+                <Text> 60$/night</Text>
               </AddressGreyWrapper>
             </div>
           ))}
