@@ -54,6 +54,11 @@
   align-items: center;
   justify-content: space-between;
 }
+.photo_number {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
 
 @keyframes opacity {
   0% {
@@ -120,4 +125,10 @@
 .switches_modal {
   width: 46%;
   margin: 0 auto;
+}
+
+.photo_number_modal {
+  position: absolute;
+  bottom: 7%;
+  right: 27%;
 }

@@ -30,7 +30,5 @@ export const PUBLIC_ROUTES = [
     component: AddFlat,
     id: 5,
   },
-
-  { path: "/account/:slug", component: PersonalAccount, id: 5 },
-
+  { path: "/account/:slug", component: PersonalAccount, id: 6 },
 ];

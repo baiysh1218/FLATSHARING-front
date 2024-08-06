@@ -5,35 +5,9 @@ import {
   FetchArgs,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
-import { url } from "inspector";
-
-const BaseQueryWithAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  let result;
-  const token = localStorage.getItem("token");
-  console.log(token);
-
-  if (token) {
-    result = await fetchBaseQuery({
-      baseUrl: process.env.REACT_APP_FLAT_API,
-      prepareHeaders: (headers) => {
-        headers.set("Authorization", `Bearer ${token}`);
-        return headers;
-      },
-    })(args, api, extraOptions);
-  } else {
-    result = await fetchBaseQuery({
-      baseUrl: process.env.REACT_APP_FLAT_API,
-    })(args, api, extraOptions);
-  }
-
-  return result;
-};
 
 const token = localStorage.getItem("token");
+console.log(token);
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({
@@ -50,6 +24,9 @@ export const productsApi = createApi({
     getOneFlat: builder.query({
       query: ({ id }) => `/listings/${id}`,
     }),
+    getUsersProducts: builder.query({
+      query: () => "/listings/user/me",
+    }),
     addFlat: builder.mutation({
       query: (data: unknown) => ({
         url: "/listings",
@@ -60,5 +37,9 @@ export const productsApi = createApi({
   }),
 });
 
-export const { useListingQuery, useGetOneFlatQuery, useAddFlatMutation } =
-  productsApi;
+export const {
+  useListingQuery,
+  useGetOneFlatQuery,
+  useAddFlatMutation,
+  useGetUsersProductsQuery,
+} = productsApi;

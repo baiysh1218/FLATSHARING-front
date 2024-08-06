@@ -26,35 +26,15 @@ interface RegisterResponse {
   is_accepted: boolean;
 }
 
-const BaseQueryWithAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  let result;
-  const token = localStorage.getItem("token");
-
-  if (token) {
-    result = await fetchBaseQuery({
-      baseUrl: "https://api.flatsharingcommunity.com/",
-      prepareHeaders: (headers) => {
-        headers.set("Authorization", `Bearer ${token}`);
-        return headers;
-      },
-    })(args, api, extraOptions);
-  } else {
-    result = await fetchBaseQuery({
-      baseUrl: "https://api.flatsharingcommunity.com/",
-    })(args, api, extraOptions);
-  }
-
-  return result;
-};
-
+const token = localStorage.getItem("token");
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_FLAT_API,
+    prepareHeaders: (headers) => {
+      headers.set("Authorization", `Bearer ${token}`);
+      return headers;
+    },
   }),
 
   endpoints: (builder) => ({
@@ -82,6 +62,9 @@ export const authApi = createApi({
     getUser: builder.query({
       query: () => "/user_infos/me",
     }),
+    getUserById: builder.query({
+      query: ({ id }) => `/user_infos/${id}`,
+    }),
   }),
 });
 
@@ -90,4 +73,5 @@ export const {
   useLoginMutation,
   useEditUserInfoMutation,
   useGetUserQuery,
+  useGetUserByIdQuery,
 } = authApi;

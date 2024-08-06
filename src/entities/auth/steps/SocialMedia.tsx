@@ -1,20 +1,13 @@
-import React, { FC, ChangeEvent } from "react";
+import React, { FC, ChangeEvent, useState } from "react";
 import { StepProps } from "./model/types";
 import styles from "./ui/index.module.css";
 import { SecondTitle } from "../../../shared/secondTitle/SecondTitle";
-import { Input } from "../../../shared/input/Input";
-import { Title } from "../../../shared/title/Title";
 import { Text } from "../../../shared/Text/Text";
 import { Button } from "../../../shared/button/Button";
 
-const SocialMedia: FC<StepProps> = ({
-  formData,
-  handleChange,
-  placeholder,
-  titles,
-  name,
-  errors,
-}) => {
+const SocialMedia: FC<StepProps> = ({ formData, handleClickChange }) => {
+  const [inst, setInst] = useState<string>("");
+  const [link, setLink] = useState<string>("");
   return (
     <div className={styles.step2_wrapper}>
       <div style={{ marginTop: "0%" }} className={styles.step1_titles}>
@@ -36,7 +29,12 @@ const SocialMedia: FC<StepProps> = ({
         <SecondTitle fz="16px" style={{ width: "30%" }}>
           Instagram
         </SecondTitle>
-        <input type="text" placeholder="Not added" />
+        <input
+          onChange={(e) => setInst(e.target.value)}
+          value={inst}
+          type="text"
+          placeholder="Not added"
+        />
         <Button
           $bg
           style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}
@@ -48,7 +46,12 @@ const SocialMedia: FC<StepProps> = ({
         <SecondTitle fz="16px" style={{ width: "30%" }}>
           LinkedIn
         </SecondTitle>
-        <input type="text" placeholder="Not added" />
+        <input
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+          type="text"
+          placeholder="Not added"
+        />
         <Button
           $bg
           style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}

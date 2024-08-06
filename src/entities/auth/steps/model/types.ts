@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, DragEvent } from "react";
 
 export type AuthFormType = {
   password: string;
@@ -8,16 +8,21 @@ export type AuthFormType = {
   is_superuser: boolean;
   is_verified: boolean;
   want_to_let: string;
+  img: any;
   is_accepted: boolean;
   firstName: string;
   lastName: string;
   address: string;
+  instagram: string;
+  linkedin: string;
 };
 
 export interface StepProps {
   value?: string;
   formData: AuthFormType;
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleClickChange?: (inst: string, link: string) => void;
+  handleDrop?: (e: DragEvent<HTMLInputElement>) => void;
   passwordConfirm?: string;
   setPasswordConfirm?: (passwordConfirm: string) => void;
   titles?: string;

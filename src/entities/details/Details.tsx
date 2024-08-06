@@ -23,11 +23,14 @@ import { SecondTitle } from "../../shared/secondTitle/SecondTitle";
 import { Button } from "../../shared/button/Button";
 import Questions from "../questions/Questions";
 import { useGetOneFlatQuery } from "../../app/redux/product/apiProducts";
+import { useGetUserByIdQuery } from "../../app/redux/auth/authApi";
 
 const Details = () => {
   const { id } = useParams();
   const { data } = useGetOneFlatQuery({ id });
-  console.log(data);
+  const userId = data?.user_id;
+  const res = useGetUserByIdQuery({ id: userId });
+  console.log(res);
   const navigate = useNavigate();
 
   return (
@@ -43,7 +46,7 @@ const Details = () => {
               </span>
             </div>
             <div>
-              <span>1 room</span>
+              <span>{data?.room ? `${data.room} room` : null}</span>
               <li>Jun</li>
               <li>Jul</li>
             </div>
@@ -120,12 +123,19 @@ const Details = () => {
               backgroundColor: "#F5F6F6",
             }}
           >
-            <LessorAvatar style={{ width: "150px" }} src={Ivan} />
-            <div>
-              <SecondTitle>Hosted by Maria</SecondTitle>
+            <LessorAvatar
+              style={{ width: "150px" }}
+              src={
+                res?.data?.picture_url
+                  ? res.data.picture_url
+                  : "https://i.pinimg.com/564x/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg"
+              }
+            />
+            <div style={{ width: "80%" }}>
+              <SecondTitle>Hosted by {res?.data?.full_name}</SecondTitle>
               <Text>
-                Ex-ABBYY, ex-FaceApp I live and work in Madrid. Like to travel,
-                my hobby is dancings
+                Job <br />
+                {res?.data?.description}
               </Text>
             </div>
           </LessorLeft>
@@ -141,8 +151,8 @@ const Details = () => {
               Book an apartment
             </SecondTitle>
             <Text style={{ color: "white" }}>
-              Contact Maria in any way convenient for you. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit
+              Contact {res?.data?.full_name} in any way convenient for you.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit
             </Text>
           </LessorRight>
         </Lessor>

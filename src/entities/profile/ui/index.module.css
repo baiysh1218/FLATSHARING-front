@@ -11,6 +11,7 @@
 .user_avatar img {
   width: 160px;
   height: 160px;
+  border-radius: 50%;
 }
 .user_avatar span {
   font-weight: 500;
@@ -84,12 +85,155 @@
 .search_btn_block {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 15px;
 }
 
 .search_btn {
   width: 48px;
   height: 48px;
   background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
+  cursor: pointer;
+}
+
+.ads_list {
+  margin-top: 40px;
+}
+.card {
+  display: flex;
+  justify-content: space-between;
+  height: 340px;
+  border-radius: 25px;
+  background-color: #f5f6f6;
+  margin-bottom: 40px;
+}
+.img_wrapper {
+  width: 42%;
+  cursor: pointer;
+}
+.img_wrapper img {
+  width: 100%;
+  border-radius: 25px;
+  object-fit: cover;
+}
+.card_content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 54%;
+  padding: 30px;
+}
+.card_content ul {
+  align-self: flex-end;
+  display: flex;
+  gap: 20px;
+}
+.card_content ul li {
+  cursor: pointer;
+}
+.card_content_info {
+  margin-top: 10%;
+}
+.card_content_info h5 {
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.card_content_text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.date {
+  border-radius: 12px;
+  padding: 4px 8px;
+  background-color: white;
+}
+
+.info_wrapper {
+  width: 65%;
+}
+.personal_info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 55px;
+}
+.personal_info_text {
+  width: 50%;
+}
+.personal_info_text h5 {
+  margin-bottom: 18px;
+}
+.personal_info_text input {
+  margin-bottom: 12px;
+}
+.personal_info_avatar {
+  position: relative;
+}
+.user_img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+}
+.user_img_icon {
+  position: absolute;
+  right: 10px;
+  bottom: 0px;
+  cursor: pointer;
+}
+
+.personal_info_item {
+  margin-bottom: 55px;
+}
+.personal_info_item h5 {
+  margin-bottom: 18px;
+}
+.personal_info_item input {
+  margin-bottom: 12px;
+}
+
+.radio {
+  display: flex;
+  gap: 40px;
+}
+
+.radio div {
+  display: flex;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.radio div:first-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.check {
+  display: flex;
+  gap: 8px;
+}
+
+.one_input {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.one_input p {
+  align-self: center;
+}
+.one_input input {
+  border: none;
+  outline: none;
+  font-size: 16px;
 }

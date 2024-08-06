@@ -137,6 +137,7 @@
 .immages_uploader {
   max-width: 200px;
   min-width: 200px;
+  border-radius: 15px;
 }
 .main_left .uploader {
   width: 100%;
