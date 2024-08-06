@@ -1,3 +1,4 @@
+// In your apiProducts setup
 import {
   createApi,
   fetchBaseQuery,
@@ -5,33 +6,6 @@ import {
   FetchArgs,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
-import { url } from "inspector";
-
-const BaseQueryWithAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  let result;
-  const token = localStorage.getItem("token");
-  console.log(token);
-
-  if (token) {
-    result = await fetchBaseQuery({
-      baseUrl: process.env.REACT_APP_FLAT_API,
-      prepareHeaders: (headers) => {
-        headers.set("Authorization", `Bearer ${token}`);
-        return headers;
-      },
-    })(args, api, extraOptions);
-  } else {
-    result = await fetchBaseQuery({
-      baseUrl: process.env.REACT_APP_FLAT_API,
-    })(args, api, extraOptions);
-  }
-
-  return result;
-};
 
 const token = localStorage.getItem("token");
 export const productsApi = createApi({
@@ -45,7 +19,20 @@ export const productsApi = createApi({
   }),
   endpoints: (builder) => ({
     listing: builder.query({
-      query: ({ offset }) => `/listings?offset=${offset}&limit=10`,
+      query: ({
+        offset,
+        direction,
+        check_in_date,
+        check_out_date,
+        sorting,
+      }) => {
+        let queryString = `/listings?offset=${offset}&limit=10`;
+        if (direction) queryString += `&direction=${direction}`;
+        if (check_in_date) queryString += `&check_in_date=${check_in_date}`;
+        if (check_out_date) queryString += `&check_out_date=${check_out_date}`;
+        if (sorting) queryString += `&sorting=${sorting}`;
+        return queryString;
+      },
     }),
     getOneFlat: builder.query({
       query: ({ id }) => `/listings/${id}`,
@@ -57,8 +44,19 @@ export const productsApi = createApi({
         body: data,
       }),
     }),
+    uploadImages: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/listings/${id}/pictures`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useListingQuery, useGetOneFlatQuery, useAddFlatMutation } =
-  productsApi;
+export const {
+  useListingQuery,
+  useGetOneFlatQuery,
+  useAddFlatMutation,
+  useUploadImagesMutation,
+} = productsApi;

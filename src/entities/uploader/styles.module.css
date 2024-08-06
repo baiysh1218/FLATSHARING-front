@@ -13,3 +13,17 @@
   align-items: center;
   border-radius: 26px;
 }
+.uploader input,
+.uploader label {
+  width: 193px;
+  height: 228px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.imageGallery {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+}

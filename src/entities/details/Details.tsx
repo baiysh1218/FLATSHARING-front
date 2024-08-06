@@ -27,7 +27,6 @@ import { useGetOneFlatQuery } from "../../app/redux/product/apiProducts";
 const Details = () => {
   const { id } = useParams();
   const { data } = useGetOneFlatQuery({ id });
-  console.log(data);
   const navigate = useNavigate();
 
   return (

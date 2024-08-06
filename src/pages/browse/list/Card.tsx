@@ -10,7 +10,6 @@ interface Props {
 }
 
 const BrowseCard: FC<Props> = ({ item }) => {
-  console.log(item);
   const navigate = useNavigate();
   return (
     <div
@@ -36,7 +35,7 @@ const BrowseCard: FC<Props> = ({ item }) => {
           </p>
         </div>
         <div>
-          <p>{item.price}</p>
+          <p>Cost: {item.price}</p>
         </div>
       </div>
     </div>

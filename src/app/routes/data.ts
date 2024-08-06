@@ -32,5 +32,4 @@ export const PUBLIC_ROUTES = [
   },
 
   { path: "/account/:slug", component: PersonalAccount, id: 5 },
-
 ];

@@ -20,7 +20,6 @@ const InputStep: FC<StepProps> = ({
     errors[name] &&
     errors[name].trim() !== ""
   );
-  console.log(errors, hasError);
   return (
     <div className={styles.input_step_wrapper}>
       <div className={styles.step1_titles}>

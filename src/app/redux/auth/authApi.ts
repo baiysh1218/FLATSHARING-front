@@ -26,31 +26,6 @@ interface RegisterResponse {
   is_accepted: boolean;
 }
 
-const BaseQueryWithAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  let result;
-  const token = localStorage.getItem("token");
-
-  if (token) {
-    result = await fetchBaseQuery({
-      baseUrl: "https://api.flatsharingcommunity.com/",
-      prepareHeaders: (headers) => {
-        headers.set("Authorization", `Bearer ${token}`);
-        return headers;
-      },
-    })(args, api, extraOptions);
-  } else {
-    result = await fetchBaseQuery({
-      baseUrl: "https://api.flatsharingcommunity.com/",
-    })(args, api, extraOptions);
-  }
-
-  return result;
-};
-
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({

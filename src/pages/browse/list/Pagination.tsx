@@ -16,7 +16,6 @@ const Pagination: FC<PaginationProps> = ({
   const maxButtons = 5;
   const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
   const endPage = Math.min(totalPages, startPage + maxButtons - 1);
-  console.log(endPage, totalPages);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -38,8 +37,38 @@ const Pagination: FC<PaginationProps> = ({
 
   return (
     <div className={styles.pagination}>
+      <button
+        className={styles.prev_btn}
+        onClick={() => handlePageChange(currentPage + 1)}
+      >
+        Succeeding
+      </button>
+      {currentPage > 3 && (
+        <>
+          <button
+            className={styles.pagination_btn}
+            onClick={() => handlePageChange(1)}
+          >
+            1
+          </button>
+          {startPage > 2 && <span className={styles.ellipsis}>...</span>}
+        </>
+      )}
       {pages}
       {endPage < totalPages && (
+        <>
+          {endPage < totalPages - 1 && (
+            <span className={styles.ellipsis}>...</span>
+          )}
+          <button
+            className={styles.pagination_btn}
+            onClick={() => handlePageChange(totalPages)}
+          >
+            {totalPages}
+          </button>
+        </>
+      )}
+      {currentPage < totalPages && (
         <button
           className={styles.further_btn}
           onClick={() => handlePageChange(currentPage + 1)}
