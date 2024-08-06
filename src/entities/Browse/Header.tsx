@@ -19,6 +19,18 @@ const BrowseApartments = () => {
 
   const navigate = useNavigate();
 
+  const handleSearch = () => {
+    const searchParams = new URLSearchParams();
+    if (direction) searchParams.append("direction", direction);
+    if (checkInDate)
+      searchParams.append("check_in_date", checkInDate.toISOString());
+    if (checkOutDate)
+      searchParams.append("check_out_date", checkOutDate.toISOString());
+    if (sorting) searchParams.append("sorting", sorting);
+
+    navigate(`/browse?${searchParams.toString()}`);
+  };
+
   return (
     <div className={styles.container}>
       <Title>Browse Apartments</Title>
@@ -69,7 +81,7 @@ const BrowseApartments = () => {
           $bg
           $icon
           style={{ maxHeight: "64px", alignSelf: "flex-end" }}
-          onClick={() => navigate("/registration")}
+          onClick={handleSearch}
         >
           Search
         </Button>

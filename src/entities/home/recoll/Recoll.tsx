@@ -10,6 +10,8 @@ import clsx from "./ui/index.module.css";
 import { Button } from "../../../shared/button/Button";
 import { useNavigate } from "react-router-dom";
 
+import content from "./content.json";
+
 const Recoll = () => {
   const navigate = useNavigate();
   return (
@@ -21,41 +23,39 @@ const Recoll = () => {
       </div>
 
       <Carousel visibleItems={4}>
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+        {content.map((item) => (
           <CarouselItem
-            style={{ backgroundColor: "#f5f6f6", borderRadius: "10px" }}
+            style={{
+              backgroundColor: "#f5f6f6",
+              borderRadius: "10px",
+              maxWidth: "320px",
+            }}
           >
             <GreyCard
-              height="700px"
+              height="500px"
               style={{
                 justifyContent: "space-between",
                 alignItems: "flex-start",
+                padding: "0",
               }}
             >
               <div>
-                <SecondTitle style={{ marginBottom: "30px" }}>
-                  «It’s no exaggeration to say that community has changed
-                  my life».
+                <SecondTitle style={{ marginBottom: "14px" }}>
+                  {item.title}
                 </SecondTitle>
-                <Text>
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                  natoque penatibus et magnis dis parturient montes, nascetur
-                  ridiculus mus. Donec quam felis, ultricies nec, pellentesque
-                  eu, pretium quis, sem.
-                </Text>
+                <Text>{item.description}</Text>
               </div>
               <div>
                 <img
                   width={"154px"}
                   src={Kirill}
                   alt=""
-                  style={{ marginBottom: "26px" }}
+                  style={{ marginBottom: "14px", marginTop: "14px" }}
                 />
                 <SecondTitle style={{ marginBottom: "10px" }}>
-                  Kirill Markin
+                  {item.name}
                 </SecondTitle>
-                <Text width="55%">Founder Ozma.io, AI & Data consultant</Text>
+                <Text width="55%">{item.position}</Text>
               </div>
             </GreyCard>
           </CarouselItem>

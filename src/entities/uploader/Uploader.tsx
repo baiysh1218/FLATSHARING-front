@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { ReactComponent as Camera } from "../../assets/icons/camera.svg";
 import clsx from "./styles.module.css";
 interface Props {
@@ -20,7 +20,6 @@ const Uploader: FC<Props> = ({ onImageChanger }) => {
           newImageSrcs.push(reader.result as string);
           if (newImageSrcs.length === Math.min(files.length, maxUpload)) {
             setImageSrcs((prev) => [...prev, ...newImageSrcs]);
-            onImageChanger(imageSrcs);
           }
         };
         reader.readAsDataURL(file);
@@ -34,8 +33,12 @@ const Uploader: FC<Props> = ({ onImageChanger }) => {
     }
   };
 
+  useEffect(() => {
+    onImageChanger(imageSrcs);
+  }, [imageSrcs]);
+
   return (
-    <div>
+    <div className={clsx.uploader_wrapper}>
       <div className={clsx.imageGallery}>
         {imageSrcs.map((src, index) => (
           <img

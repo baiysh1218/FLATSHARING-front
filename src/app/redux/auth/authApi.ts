@@ -26,6 +26,7 @@ interface RegisterResponse {
   is_accepted: boolean;
 }
 
+
 const token = localStorage.getItem("token");
 export const authApi = createApi({
   reducerPath: "authApi",

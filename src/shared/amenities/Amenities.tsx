@@ -26,7 +26,6 @@ const Amenities = () => {
 
   return (
     <div className={styles.amenitiesContainer}>
-      <h3>Amenities</h3>
       <div className={styles.amenitiesGrid}>
         {amenitiesList.map((amenity) => (
           <label key={amenity} className={styles.amenityLabel}>

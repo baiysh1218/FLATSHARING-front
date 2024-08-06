@@ -9,7 +9,10 @@ import { useState } from "react";
 import { TextArea } from "../../shared/textArea/TextArea";
 import Amenities from "../../shared/amenities/Amenities";
 import { Button } from "../../shared/button/Button";
-import { useAddFlatMutation } from "../../app/redux/product/apiProducts";
+import {
+  useAddFlatMutation,
+  useUploadImagesMutation,
+} from "../../app/redux/product/apiProducts";
 
 const AddFlat = () => {
   const [departure, setDeparture] = useState<Date | null>(null);
@@ -20,8 +23,11 @@ const AddFlat = () => {
   const [address, setAddress] = useState("");
   const [price, setPrice] = useState("");
   const [comments, setComments] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
 
   const [addFlat] = useAddFlatMutation();
+  const [uploadImage] = useUploadImagesMutation();
 
   const onImageChanger = (data: string[]) => {
     setImages(data);
@@ -31,7 +37,7 @@ const AddFlat = () => {
     setRooms(data);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const data = {
       description,
       date_from: departure ? departure.toISOString() : null,
@@ -51,7 +57,21 @@ const AddFlat = () => {
       room: rooms,
       flexible_dates: true,
     };
-    addFlat(data);
+
+    const result = await addFlat(data);
+
+    if (result.data) {
+      const imagesData = images.map((imageUrl, index) => ({
+        status: "used",
+        listing_id: result.data.channel_id,
+        listing_picture_id: index,
+        picture_url: imageUrl,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }));
+
+      await uploadImage({ data: imagesData, id: result.data.channel_id });
+    }
   };
 
   return (
@@ -61,7 +81,7 @@ const AddFlat = () => {
       </SecondTitle>
       <div className={clsx.upload}>
         <SecondTitle>Photos of the apartment</SecondTitle>
-        <div>
+        <div className={clsx.upload_item}>
           <Text>Upload no more than 8 photos of your apartment.</Text>
           <Uploader onImageChanger={onImageChanger} />
         </div>
@@ -70,7 +90,17 @@ const AddFlat = () => {
         <SecondTitle>Location</SecondTitle>
         <div>
           <Input
-            placeholder="Enter the address"
+            placeholder="Enter the district"
+            value={address}
+            onChange={(e) => setCountry(e.target.value)}
+          />
+          <Input
+            placeholder="Enter the city"
+            value={address}
+            onChange={(e) => setCity(e.target.value)}
+          />{" "}
+          <Input
+            placeholder="Enter the district"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />

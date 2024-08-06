@@ -1,3 +1,4 @@
+// In your apiProducts setup
 import {
   createApi,
   fetchBaseQuery,
@@ -19,7 +20,20 @@ export const productsApi = createApi({
   }),
   endpoints: (builder) => ({
     listing: builder.query({
-      query: ({ offset }) => `/listings?offset=${offset}&limit=10`,
+      query: ({
+        offset,
+        direction,
+        check_in_date,
+        check_out_date,
+        sorting,
+      }) => {
+        let queryString = `/listings?offset=${offset}&limit=10`;
+        if (direction) queryString += `&direction=${direction}`;
+        if (check_in_date) queryString += `&check_in_date=${check_in_date}`;
+        if (check_out_date) queryString += `&check_out_date=${check_out_date}`;
+        if (sorting) queryString += `&sorting=${sorting}`;
+        return queryString;
+      },
     }),
     getOneFlat: builder.query({
       query: ({ id }) => `/listings/${id}`,
@@ -34,6 +48,13 @@ export const productsApi = createApi({
         body: data,
       }),
     }),
+    uploadImages: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/listings/${id}/pictures`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -42,4 +63,5 @@ export const {
   useGetOneFlatQuery,
   useAddFlatMutation,
   useGetUsersProductsQuery,
+  useUploadImagesMutation,
 } = productsApi;
