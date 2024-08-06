@@ -18,11 +18,13 @@
   flex-direction: column;
   gap: 14px;
 }
-.upload div {
+
+.upload_item {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
+
 .location div {
   display: flex;
   flex-direction: column;

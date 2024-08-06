@@ -9,7 +9,6 @@ interface Props {
 }
 
 const BrowseList: FC<Props> = ({ data, currentPage, setCurrentPage }) => {
-  //* Нету определения сколько страниц в общем
   const totalPages = 100;
   return (
     <div

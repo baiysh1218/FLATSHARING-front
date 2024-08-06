@@ -14,3 +14,7 @@
   align-items: center;
   font-size: 16px;
 }
+
+.amenityLabel input {
+  margin-right: 14px;
+}

@@ -78,7 +78,6 @@ const Auth: React.FC = () => {
 
   const [login, { data: tokens }] = useLoginMutation();
   const { data } = useGetUserQuery({});
-  console.log("data", data);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -139,16 +138,15 @@ const Auth: React.FC = () => {
       is_active: true,
       is_superuser: false,
       is_verified: false,
-      is_accepted: false,
+      is_accepted: true,
     };
+
     const loginData = new FormData();
     loginData.append("username", formData.email);
     loginData.append("password", formData.password);
     try {
       const res = await register({ user: registerData });
       const res2 = await login({ user: loginData });
-      console.log(res);
-      console.log(res2);
 
       if (res.error && "data" in res.error) {
         const newErrors: { [key: string]: string } = {};
@@ -173,7 +171,6 @@ const Auth: React.FC = () => {
       console.error(err);
     }
   };
-  console.log(formData);
 
   const handleEdit = async () => {
     if (!validateStep()) return;
@@ -200,7 +197,6 @@ const Auth: React.FC = () => {
     };
     try {
       const res = await edit({ user: editedData });
-      console.log(res);
     } catch (err) {}
   };
 
