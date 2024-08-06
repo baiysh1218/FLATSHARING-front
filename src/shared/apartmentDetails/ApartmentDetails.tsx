@@ -25,15 +25,28 @@ interface ApartmentDetailProps {
 }
 
 const ApartmentDetails: FC<ApartmentDetailProps> = ({ images }) => {
-  const [selectedImage, setSelectedImage] = useState(images[0].picture_url);
+  const [selectedImage, setSelectedImage] = useState(images[0]?.picture_url);
   const [hover, setHover] = useState(false);
   const [modal, setModal] = useState(false);
+  const [curr, setCurr] = useState(0);
+
+  const prev = () => {
+    setCurr((curr: any) => (curr === 0 ? images.length - 1 : curr - 1));
+  };
+
+  const next = () => {
+    setCurr((curr: any) => (curr === images.length - 1 ? 0 : curr + 1));
+  };
+
+  const handleImageClick = (index: number) => {
+    setCurr(index);
+  };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.main}>
         <img
-          src={selectedImage}
+          src={images[curr]?.picture_url}
           alt="Selected"
           className={styles.selected}
           onMouseEnter={() => setHover(true)}
@@ -52,16 +65,24 @@ const ApartmentDetails: FC<ApartmentDetailProps> = ({ images }) => {
             <div className={styles.arrow_switches}>
               <div
                 onMouseEnter={() => setHover(true)}
+                onClick={prev}
                 className={`${styles.arrow_switch} ${styles.arrow}`}
               >
                 <img src={arrowToLeft} alt="increase" />
               </div>
               <div
                 onMouseEnter={() => setHover(true)}
+                onClick={next}
                 className={`${styles.arrow_switch} ${styles.arrow}`}
               >
                 <img src={arrowToRight} alt="increase" />
               </div>
+            </div>
+            <div
+              onMouseEnter={() => setHover(true)}
+              className={`${styles.photo_number} ${styles.arrow}`}
+            >
+              <p>{curr + 1}</p>
             </div>
           </>
         )}
@@ -70,7 +91,7 @@ const ApartmentDetails: FC<ApartmentDetailProps> = ({ images }) => {
         {images.slice(0, 4).map((image, index) => (
           <img
             key={index}
-            src={image.picture_url}
+            src={image?.picture_url}
             alt={`Thumbnail ${index}`}
             onClick={() => setSelectedImage(image.picture_url)}
             className={styles.not_selected}
@@ -78,12 +99,12 @@ const ApartmentDetails: FC<ApartmentDetailProps> = ({ images }) => {
         ))}
       </div>
       <Modal>
-        <div className={`${styles.modal} ${modal ? styles.active : null}`}>
-          <div
-            className={styles.modal__item}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img src={img2} alt="" />
+        <div
+          className={`${styles.modal} ${modal ? styles.active : null}`}
+          onClick={() => setModal(false)}
+        >
+          <div className={styles.modal__item}>
+            <img src={images[curr]?.picture_url} alt="" />
           </div>
           <div
             onClick={() => setModal(false)}
@@ -91,19 +112,30 @@ const ApartmentDetails: FC<ApartmentDetailProps> = ({ images }) => {
           >
             <img src={arrowReduce} alt="increase" />
           </div>
-          <div className={`${styles.arrow_switches} ${styles.switches_modal}`}>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className={`${styles.arrow_switches} ${styles.switches_modal}`}
+          >
             <div
               onMouseEnter={() => setHover(true)}
+              onClick={prev}
               className={`${styles.arrow_switch} ${styles.arrow}`}
             >
               <img src={arrowToLeft} alt="increase" />
             </div>
             <div
               onMouseEnter={() => setHover(true)}
+              onClick={next}
               className={`${styles.arrow_switch} ${styles.arrow}`}
             >
               <img src={arrowToRight} alt="increase" />
             </div>
+          </div>
+          <div
+            onMouseEnter={() => setHover(true)}
+            className={`${styles.photo_number_modal} ${styles.arrow}`}
+          >
+            <p>{curr + 1}</p>
           </div>
         </div>
       </Modal>

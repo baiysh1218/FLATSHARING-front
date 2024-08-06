@@ -20,7 +20,7 @@ const Hero: FC = () => {
   return (
     <div className={`container ${clsx.hero}`}>
       <GreyCard $hero style={{ alignItems: "flex-start" }}>
-        <Title $main>Travel 2–3 times cheaper</Title>
+        <Title>Travel 2–3 times cheaper</Title>
         <Text width="66%">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore.

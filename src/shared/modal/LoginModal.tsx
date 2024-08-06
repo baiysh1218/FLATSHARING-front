@@ -41,6 +41,7 @@ const LoginModal: FC<ModalProps> = ({ modal, setModal }) => {
 
     try {
       const res = await login({ user: loginData });
+      console.log(res);
       if (res.data) {
         localStorage.setItem("token", res.data.access_token);
       }

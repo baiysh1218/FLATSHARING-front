@@ -1,9 +1,15 @@
-import React, { useState, DragEvent, ChangeEvent } from "react";
+import React, { useState, DragEvent, ChangeEvent, FC } from "react";
 import clsx from "./ui/index.module.css";
 import { SecondTitle } from "../../../shared/secondTitle/SecondTitle";
 import { Text } from "../../../shared/Text/Text";
+import { StepProps } from "./model/types";
 
-const ImageUploader: React.FC = () => {
+const ImageUploader: FC<StepProps> = ({
+  formData,
+  handleChange,
+  handleDrop,
+  name,
+}) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
   const handleImageUpload = (file: File) => {
@@ -21,16 +27,13 @@ const ImageUploader: React.FC = () => {
     }
   };
 
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const file = event.dataTransfer.files?.[0];
-    if (file) {
-      handleImageUpload(file);
-    }
-  };
-
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+  };
+
+  const handleClick = () => {
+    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+    fileInput.click();
   };
 
   return (
@@ -42,10 +45,10 @@ const ImageUploader: React.FC = () => {
           eiusmod tempor incididunt ut labore.
         </Text>
       </div>
-      {imageSrc ? (
+      {formData.img ? (
         <img
           className={clsx.immages_uploader}
-          src={imageSrc}
+          src={formData.img}
           alt="Uploaded Preview"
         />
       ) : (
@@ -53,12 +56,15 @@ const ImageUploader: React.FC = () => {
           className={clsx.uploader}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
+          onClick={handleClick}
+          style={{ cursor: "pointer" }}
         >
           Upload or drag a photo
           <input
             type="file"
             accept="image/*"
-            onChange={handleInputChange}
+            onChange={handleChange}
+            name={name}
             style={{ display: "none" }}
             id="fileInput"
           />

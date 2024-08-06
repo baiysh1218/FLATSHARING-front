@@ -4,11 +4,17 @@ import DatePicker from "react-datepicker";
 import { FaAngleDown } from "react-icons/fa";
 import { useState } from "react";
 import { Text } from "../../../shared/Text/Text";
-import arrow from "../../../assets/icons/arrow_white.png";
+import arrow from "../../../assets/icons/arrowDown.svg";
+import MyAdsList from "./list/MyAdsList";
+import { useGetUsersProductsQuery } from "../../../app/redux/product/apiProducts";
 
 const MyAds = () => {
   const [checkInDate, setCheckInDate] = useState<Date | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
+
+  const { data } = useGetUsersProductsQuery({});
+  console.log(data);
+
   return (
     <div className={styles.right_side}>
       <div className={styles.ads_header}>
@@ -21,10 +27,10 @@ const MyAds = () => {
           }}
           fz="24px"
         >
-          Current Ads (3)
+          Current Ads ({data?.length})
         </SecondTitle>
         <SecondTitle style={{ cursor: "pointer" }} fz="24px">
-          Archive Ads (1)
+          Archive Ads
         </SecondTitle>
       </div>
       <div className={styles.ads_filter}>
@@ -54,13 +60,14 @@ const MyAds = () => {
         <div className={styles.search_btn_block}>
           <div className={styles.btn_text}>
             <Text>Sorting</Text>
-            <Text>Upcoming dates</Text>
+            <Text fz="20px">Upcoming dates</Text>
           </div>
           <div className={styles.search_btn}>
             <img src={arrow} alt="arrow" />
           </div>
         </div>
       </div>
+      <MyAdsList data={data} />
     </div>
   );
 };

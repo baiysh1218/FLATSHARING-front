@@ -8,6 +8,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 
 const token = localStorage.getItem("token");
+console.log(token);
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({
@@ -37,6 +38,9 @@ export const productsApi = createApi({
     getOneFlat: builder.query({
       query: ({ id }) => `/listings/${id}`,
     }),
+    getUsersProducts: builder.query({
+      query: () => "/listings/user/me",
+    }),
     addFlat: builder.mutation({
       query: (data: unknown) => ({
         url: "/listings",
@@ -58,5 +62,6 @@ export const {
   useListingQuery,
   useGetOneFlatQuery,
   useAddFlatMutation,
+  useGetUsersProductsQuery,
   useUploadImagesMutation,
 } = productsApi;

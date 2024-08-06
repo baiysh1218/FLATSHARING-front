@@ -1,3 +1,3 @@
 export type TitleProps = {
-  $main?: boolean;
+  $fz?: string;
 };
