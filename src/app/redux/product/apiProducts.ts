@@ -1,14 +1,7 @@
-// In your apiProducts setup
-import {
-  createApi,
-  fetchBaseQuery,
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const token = localStorage.getItem("token");
-console.log(token);
+
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({
@@ -27,12 +20,11 @@ export const productsApi = createApi({
         check_out_date,
         sorting,
       }) => {
-        let queryString = `/listings?offset=${offset}&limit=10`;
-        if (direction) queryString += `&direction=${direction}`;
-        if (check_in_date) queryString += `&check_in_date=${check_in_date}`;
-        if (check_out_date) queryString += `&check_out_date=${check_out_date}`;
-        if (sorting) queryString += `&sorting=${sorting}`;
-        return queryString;
+        if (offset && direction && check_in_date && check_out_date && sorting) {
+          return `/listings?direction=${direction}&check_in_date=${check_in_date}&check_out_date=${check_out_date}&sorting=${sorting}&offset=${offset}&limit=10`;
+        } else {
+          return "/listings";
+        }
       },
     }),
     getOneFlat: builder.query({
@@ -49,11 +41,15 @@ export const productsApi = createApi({
       }),
     }),
     uploadImages: builder.mutation({
-      query: ({ data, id }) => ({
-        url: `/listings/${id}/pictures`,
-        method: "POST",
-        body: data,
-      }),
+      query: ({ data, id }) => {
+        console.log(data);
+
+        return {
+          url: `/listings/${id}/pictures`,
+          method: "POST",
+          body: data,
+        };
+      },
     }),
   }),
 });

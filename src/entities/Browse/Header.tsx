@@ -1,35 +1,35 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaAngleDown } from "react-icons/fa";
 import styles from "./ui/index.module.css";
 import { Title } from "../../shared/title/Title";
 import { Text } from "../../shared/Text/Text";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "../../shared/button/Button";
 
 const BrowseApartments = () => {
   const [direction, setDirection] = useState<string>("");
   const [checkInDate, setCheckInDate] = useState<Date | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
-  const [sorting, setSorting] = useState("Upcoming dates");
+  const [sorting, setSorting] = useState("upcoming_date");
 
-  const handleDirectionChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setDirection(e.target.value);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    const searchParams = new URLSearchParams();
-    if (direction) searchParams.append("direction", direction);
-    if (checkInDate)
-      searchParams.append("check_in_date", checkInDate.toISOString());
-    if (checkOutDate)
-      searchParams.append("check_out_date", checkOutDate.toISOString());
-    if (sorting) searchParams.append("sorting", sorting);
-
-    navigate(`/browse?${searchParams.toString()}`);
+    setSearchParams({
+      direction: direction || "",
+      check_in_date: checkInDate?.toISOString() || "",
+      check_out_date: checkOutDate?.toISOString() || "",
+      sorting: sorting || "",
+    });
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -45,7 +45,7 @@ const BrowseApartments = () => {
             type="text"
             placeholder="Where do you want to go?"
             value={direction}
-            onChange={handleDirectionChange}
+            onChange={(e) => setDirection(e.target.value)}
           />
         </div>
         <div className={styles.filter}>

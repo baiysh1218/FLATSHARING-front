@@ -28,7 +28,7 @@ const Rooms: FC<Props> = ({ handlegetRooms }) => {
       <Button $border onClick={handleDecrement}>
         -
       </Button>
-      <Input readOnly value={count > 0 ? `${count} rooms` : "Studio"} />
+      <Input readOnly value={count > 0 ? `${count}` : "Studio"} />
       <Button $border onClick={handleIncrement}>
         +
       </Button>

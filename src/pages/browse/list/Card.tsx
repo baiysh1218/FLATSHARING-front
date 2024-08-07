@@ -12,10 +12,7 @@ interface Props {
 const BrowseCard: FC<Props> = ({ item }) => {
   const navigate = useNavigate();
   return (
-    <div
-      onClick={() => navigate(`/details/${item.listing_id}`)}
-      className={styles.card}
-    >
+    <div className={styles.card}>
       <img
         src={
           item.used_listing_pictures[0]
@@ -25,7 +22,10 @@ const BrowseCard: FC<Props> = ({ item }) => {
         alt=""
       />
       <div>
-        <div>
+        <div
+          onClick={() => navigate(`/details/${item.listing_id}`)}
+          className={styles.title}
+        >
           <p>
             {item.city}, {item.country}
           </p>

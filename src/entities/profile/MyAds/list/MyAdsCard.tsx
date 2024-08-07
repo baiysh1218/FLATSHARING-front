@@ -9,20 +9,16 @@ import { useNavigate } from "react-router-dom";
 const MyAdsCard: FC<myAdsCardProps> = ({ item }) => {
   const navigate = useNavigate();
   return (
-    <div
-      className={styles.card}
-      onClick={() => navigate(`/details/${item?.listing_id}`)}
-    >
-      <div className={styles.img_wrapper}>
-        <img
-          src={
-            item?.used_listing_pictures[0]?.picture_url
-              ? item?.used_listing_pictures[0].picture_url
-              : photo
-          }
-          alt=""
-        />
-      </div>
+    <div className={styles.card}>
+      <img
+        src={
+          item?.used_listing_pictures[0]?.picture_url
+            ? item?.used_listing_pictures[0].picture_url
+            : photo
+        }
+        className={styles.images}
+        alt=""
+      />
       <div className={styles.card_content}>
         <ul>
           <li>Edit</li>
@@ -31,7 +27,11 @@ const MyAdsCard: FC<myAdsCardProps> = ({ item }) => {
         </ul>
 
         <div className={styles.card_content_info}>
-          <SecondTitle weight="500" fz="24px">
+          <SecondTitle
+            onClick={() => navigate(`/details/${item?.listing_id}`)}
+            weight="500"
+            fz="24px"
+          >
             apartment in the San Blas area
           </SecondTitle>
           <Text style={{ marginBottom: "10px" }}>

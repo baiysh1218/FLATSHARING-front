@@ -109,15 +109,33 @@
   border-radius: 25px;
   background-color: #f5f6f6;
   margin-bottom: 40px;
+  transition: all 0.3s;
+}
+
+.card:hover {
+  transform: scale(0.95);
+  filter: brightness(80%);
 }
 .img_wrapper {
   width: 42%;
+  height: auto;
   cursor: pointer;
+  object-fit: cover;
+}
+
+.images {
+  width: 42%;
+  border-radius: 25px;
+  object-fit: cover;
 }
 .img_wrapper img {
   width: 100%;
   border-radius: 25px;
   object-fit: cover;
+}
+
+.card_content_info h5:hover {
+  text-decoration: underline;
 }
 .card_content {
   position: relative;
@@ -126,6 +144,7 @@
   width: 54%;
   padding: 30px;
 }
+
 .card_content ul {
   align-self: flex-end;
   display: flex;
@@ -148,10 +167,15 @@
   gap: 10px;
   margin-bottom: 18px;
 }
+
+.card_content_text p {
+  display: flex;
+}
 .date {
   border-radius: 12px;
   padding: 4px 8px;
   background-color: white;
+  width: 80%;
 }
 
 .info_wrapper {
