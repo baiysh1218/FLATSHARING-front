@@ -91,3 +91,17 @@
   font-weight: 500;
   line-height: 28.13px;
 }
+.network {
+  color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+.network a,
+.network p {
+  color: white;
+}
+
+.network a:hover {
+  text-decoration: underline;
+}

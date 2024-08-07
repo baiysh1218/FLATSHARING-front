@@ -63,7 +63,6 @@ const AddFlat = () => {
 
     try {
       const result = await addFlat(data).unwrap();
-      console.log(result);
 
       if (result.listing_id) {
         const formData = new FormData();

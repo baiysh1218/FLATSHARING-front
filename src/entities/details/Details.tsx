@@ -30,8 +30,121 @@ const Details = () => {
   const { data } = useGetOneFlatQuery({ id });
   const userId = data?.user_id;
   const res = useGetUserByIdQuery({ id: userId });
-  console.log(res);
   const navigate = useNavigate();
+
+  // const data = {
+  //   description: description || "",
+  //   date_from: departure ? departure.toISOString() : "",
+  //   date_to: returnDate ? returnDate.toISOString() : "",
+  //   country: country || "",
+  //   city: city || "",
+  //   price: price || "",
+  //   comments: comments || "",
+  //   is_rented: false,
+  //   created_at: new Date().toISOString(),
+  //   updated_at: new Date().toISOString(),
+  //   message_ids: "",
+  //   channel_id: 0,
+  //   status: "created",
+  //   district: address || "",
+  //   swap: "",
+  //   room: rooms ? rooms.toString() : "",
+  //   flexible_dates: true,
+  // };
+
+  //   {
+  //     "description": "Большая студия с залом, рабочим и спальных местами. Небольшая кухня, ванная со всем необходимым (кофемашина, духовка, стиральная машина, фен, Wi-Fi, и тд). Квартира полностью отремонтированна год назад.\n5й этаж (6 по российским меркам), есть лифт.\nНаходится в 20м округе Парижа,village Jourdain. В округе много хороших ресторанов, баров, есть несколько концертных залов, район молодёжный, известен своим стрит артом, рядом China-town, большой красивый парк Butte Chaumont и совсем рядом с домом парк belleville с видом на Эйфелеву башню. 10 мин до центра Парижа на метро",
+  //     "date_from": "Конец июня. Квартира свободна во время олимпийских игр.",
+  //     "date_to": "Сентябрь",
+  //     "country": "Франция",
+  //     "city": "Париж",
+  //     "price": "70 евро за сутки, плюс уборка 40 евро (платится один раз). Квартира свободна во время олимпийских игр. Цена на это время договорная.",
+  //     "comments": null,
+  //     "is_rented": null,
+  //     "created_at": "2024-06-08T10:17:19.137651",
+  //     "updated_at": "2024-06-08T10:38:38.789044",
+  //     "message_ids": "6941;6942;6943;6944;6945;6946;6947;6948;6949",
+  //     "channel_id": -1001885600249,
+  //     "status": "posted",
+  //     "district": null,
+  //     "swap": null,
+  //     "room": null,
+  //     "flexible_dates": null,
+  //     "listing_id": 2929,
+  //     "user_id": "d746d0ec-8d94-4f4a-91a2-4b5f09f8a861",
+  //     "used_listing_pictures": [
+  //         {
+  //             "status": "used",
+  //             "listing_id": 2929,
+  //             "listing_picture_id": 1220,
+  //             "picture_url": "https://fs-community-public.s3.eu-west-3.amazonaws.com/2929_2929_AQADdr4xG0DEcFB-.jpg",
+  //             "created_at": "2024-06-08T10:26:32.479150",
+  //             "updated_at": "2024-06-08T10:26:32.479155"
+  //         },
+  //         {
+  //             "status": "used",
+  //             "listing_id": 2929,
+  //             "listing_picture_id": 1221,
+  //             "picture_url": "https://fs-community-public.s3.eu-west-3.amazonaws.com/2929_2929_AQADUsQxG68lIVN-.jpg",
+  //             "created_at": "2024-06-08T10:26:32.531425",
+  //             "updated_at": "2024-06-08T10:26:32.531430"
+  //         },
+  //         {
+  //             "status": "used",
+  //             "listing_id": 2929,
+  //             "listing_picture_id": 1222,
+  //             "picture_url": "https://fs-community-public.s3.eu-west-3.amazonaws.com/2929_2929_AQADU8QxG68lIVN-.jpg",
+  //             "created_at": "2024-06-08T10:26:32.546469",
+  //             "updated_at": "2024-06-08T10:26:32.546474"
+  //         },
+  //         {
+  //             "status": "used",
+  //             "listing_id": 2929,
+  //             "listing_picture_id": 1223,
+  //             "picture_url": "https://fs-community-public.s3.eu-west-3.amazonaws.com/2929_2929_AQADVMQxG68lIVN-.jpg",
+  //             "created_at": "2024-06-08T10:26:32.581426",
+  //             "updated_at": "2024-06-08T10:26:32.581430"
+  //         },
+  //         {
+  //             "status": "used",
+  //             "listing_id": 2929,
+  //             "listing_picture_id": 1224,
+  //             "picture_url": "https://fs-community-public.s3.eu-west-3.amazonaws.com/2929_2929_AQADLcAxG_1JYFF-.jpg",
+  //             "created_at": "2024-06-08T10:26:32.679347",
+  //             "updated_at": "2024-06-08T10:26:32.679351"
+  //         },
+  //         {
+  //             "status": "used",
+  //             "listing_id": 2929,
+  //             "listing_picture_id": 1225,
+  //             "picture_url": "https://fs-community-public.s3.eu-west-3.amazonaws.com/2929_2929_AQADUcQxG68lIVN-.jpg",
+  //             "created_at": "2024-06-08T10:26:32.724276",
+  //             "updated_at": "2024-06-08T10:26:32.724280"
+  //         },
+  //         {
+  //             "status": "used",
+  //             "listing_id": 2929,
+  //             "listing_picture_id": 1226,
+  //             "picture_url": "https://fs-community-public.s3.eu-west-3.amazonaws.com/2929_2929_AQADUMQxG68lIVN-.jpg",
+  //             "created_at": "2024-06-08T10:26:32.728981",
+  //             "updated_at": "2024-06-08T10:26:32.728985"
+  //         },
+  //         {
+  //             "status": "used",
+  //             "listing_id": 2929,
+  //             "listing_picture_id": 1227,
+  //             "picture_url": "https://fs-community-public.s3.eu-west-3.amazonaws.com/2929_2929_AQADVcQxG68lIVN-.jpg",
+  //             "created_at": "2024-06-08T10:26:32.780581",
+  //             "updated_at": "2024-06-08T10:26:32.780585"
+  //         }
+  //     ]
+  // }
+
+  const socialNetworks = {
+    Instagram: res.data?.instagram,
+    LinkedIn: res.data?.linkedin,
+    WhatsApp: res.data?.whatsapp,
+  };
 
   return (
     <div className={`${styles.details} container`}>
@@ -66,7 +179,7 @@ const Details = () => {
               <hr />
               <div className={styles.service}>
                 <p>Amenities</p>
-                <div className={styles.service_item}>
+                {/* <div className={styles.service_item}>
                   <ul>
                     <li>
                       <Car />
@@ -95,8 +208,8 @@ const Details = () => {
                       On-site gym
                     </li>
                   </ul>
-                </div>
-                <hr />
+                </div> */}
+                {/* <hr /> */}
                 <div className={styles.price}>
                   <p>
                     Cost: <span>{data.price}</span>
@@ -152,7 +265,20 @@ const Details = () => {
             </SecondTitle>
             <Text style={{ color: "white" }}>
               Contact {res?.data?.full_name} in any way convenient for you.
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              <div className={styles.network}>
+                {Object.entries(socialNetworks).map(([network, url]) =>
+                  url ? (
+                    <div key={network}>
+                      <a href={url} target="_blank">
+                        {network},{" "}
+                      </a>
+                      {res.data?.tg_username && (
+                        <p>tg: {res?.data?.tg_username}</p>
+                      )}
+                    </div>
+                  ) : null
+                )}
+              </div>
             </Text>
           </LessorRight>
         </Lessor>
