@@ -82,7 +82,9 @@ const ApartmentDetails: FC<ApartmentDetailProps> = ({ images }) => {
               onMouseEnter={() => setHover(true)}
               className={`${styles.photo_number} ${styles.arrow}`}
             >
-              <p>{curr + 1}</p>
+              <p>
+                {curr + 1}/{images.length}
+              </p>
             </div>
           </>
         )}
