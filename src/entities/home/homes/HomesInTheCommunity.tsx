@@ -11,6 +11,8 @@ import { AddressTitle } from "../../../shared/addressTitle/AddressTitle";
 import img3 from "../../../assets/png/img3.png";
 import { useNavigate } from "react-router-dom";
 
+import content from "./content.json";
+
 const HomesInTheCommunity = () => {
   const navigate = useNavigate();
   return (
@@ -39,15 +41,15 @@ const HomesInTheCommunity = () => {
 
       <div className={`container `}>
         <div className={clsx.wrapper}>
-          {[1, 2, 3].map((item) => (
+          {content.map((item) => (
             <div
               className={clsx.accordion}
               style={{ backgroundImage: `url(${img3})` }}
             >
               <AddressGreyWrapper>
-                <AddressTitle>Central London</AddressTitle>
-                <Text $through>130$+/night Airbnb</Text>
-                <Text> 60$/night</Text>
+                <AddressTitle>{item.title}</AddressTitle>
+                <Text $through>{item.airBnb}</Text>
+                <Text> {item.price}</Text>
               </AddressGreyWrapper>
             </div>
           ))}

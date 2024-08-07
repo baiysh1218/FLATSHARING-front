@@ -1,29 +1,26 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { ReactComponent as Camera } from "../../assets/icons/camera.svg";
 import clsx from "./styles.module.css";
+
 interface Props {
-  onImageChanger: (data: string[]) => void;
+  onImageChanger: (data: File[]) => void;
+  required: boolean;
 }
 
-const Uploader: FC<Props> = ({ onImageChanger }) => {
-  const [imageSrcs, setImageSrcs] = useState<string[]>([]);
+const Uploader: FC<Props> = ({ onImageChanger, required }) => {
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
 
   const handleImageUpload = (files: FileList) => {
-    const newImageSrcs: string[] = [];
-    const maxUpload = 8 - imageSrcs.length;
+    const newImageFiles: File[] = [];
+    const maxUpload = 8 - imageFiles.length;
 
     Array.from(files)
       .slice(0, maxUpload)
       .forEach((file) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          newImageSrcs.push(reader.result as string);
-          if (newImageSrcs.length === Math.min(files.length, maxUpload)) {
-            setImageSrcs((prev) => [...prev, ...newImageSrcs]);
-          }
-        };
-        reader.readAsDataURL(file);
+        newImageFiles.push(file);
       });
+
+    setImageFiles((prev) => [...prev, ...newImageFiles]);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,24 +31,25 @@ const Uploader: FC<Props> = ({ onImageChanger }) => {
   };
 
   useEffect(() => {
-    onImageChanger(imageSrcs);
-  }, [imageSrcs]);
+    onImageChanger(imageFiles);
+  }, [imageFiles]);
 
   return (
     <div className={clsx.uploader_wrapper}>
       <div className={clsx.imageGallery}>
-        {imageSrcs.map((src, index) => (
+        {imageFiles.map((file, index) => (
           <img
             key={index}
-            src={src}
+            src={URL.createObjectURL(file)}
             alt={`Uploaded ${index + 1}`}
             className={clsx.imagePreview}
           />
         ))}
       </div>
-      {imageSrcs.length < 8 && (
+      {imageFiles.length < 8 && (
         <div className={clsx.uploader}>
           <input
+            required={required}
             type="file"
             accept="image/*"
             onChange={handleInputChange}
@@ -65,7 +63,7 @@ const Uploader: FC<Props> = ({ onImageChanger }) => {
         </div>
       )}
 
-      {imageSrcs.length >= 8 && (
+      {imageFiles.length >= 8 && (
         <p className={clsx.errorMessage}>You can only upload up to 8 photos.</p>
       )}
     </div>

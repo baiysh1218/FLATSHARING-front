@@ -71,11 +71,15 @@
   gap: 0px;
   opacity: 0px;
 }
+.price {
+  display: flex;
+  align-items: center;
+}
 
 .price p {
   width: 100%;
   display: flex;
-  align-items: start;
+  align-items: center;
   gap: 10px;
   font-size: 16px;
   font-weight: 400;

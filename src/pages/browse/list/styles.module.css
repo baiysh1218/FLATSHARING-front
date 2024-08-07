@@ -101,17 +101,25 @@
 .card {
   cursor: pointer;
   overflow: hidden;
+  transition: all 0.3s;
 }
 
 .card img {
-  transition: all 0.3s;
   border-radius: 32px;
 }
-.card img:hover {
-  transform: scale(0.9);
-  filter: brightness(40%);
+.card:hover {
+  transform: scale(0.95);
+  filter: brightness(80%);
 }
 .ellipsis {
   display: flex;
   align-items: flex-end;
+}
+.title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.title:hover {
+  text-decoration: underline;
 }

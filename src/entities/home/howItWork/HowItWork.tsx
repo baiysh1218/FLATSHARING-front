@@ -8,6 +8,7 @@ import { SecondTitle } from "../../../shared/secondTitle/SecondTitle";
 import { Text } from "../../../shared/Text/Text";
 import { Button } from "../../../shared/button/Button";
 import { useNavigate } from "react-router-dom";
+import content from "./content.json";
 
 const HowItWork = () => {
   const navigate = useNavigate();
@@ -15,18 +16,16 @@ const HowItWork = () => {
     <div className="container">
       <Title style={{ textAlign: "center" }}>How it works</Title>
       <div className={clsx.cards}>
-        {[1, 2, 3, 4].map((item) => (
+        {content.map((item) => (
           <div className={clsx.card}>
             <GreyCard height="440px" src={img} />
             <div>
               <SecondTitle
                 style={{ fontFamily: "Roboto Condensed, sans-serif" }}
               >
-                Access the community
+                {item.title}
               </SecondTitle>
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </Text>
+              <Text>{item.description}</Text>
             </div>
           </div>
         ))}

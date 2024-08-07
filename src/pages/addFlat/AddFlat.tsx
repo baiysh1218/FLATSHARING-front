@@ -13,11 +13,12 @@ import {
   useAddFlatMutation,
   useUploadImagesMutation,
 } from "../../app/redux/product/apiProducts";
+import { useNavigate } from "react-router-dom";
 
 const AddFlat = () => {
   const [departure, setDeparture] = useState<Date | null>(null);
   const [returnDate, setReturnDate] = useState<Date | null>(null);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<File[] | []>([]);
   const [rooms, setRooms] = useState<number | null>(null);
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
@@ -29,7 +30,9 @@ const AddFlat = () => {
   const [addFlat] = useAddFlatMutation();
   const [uploadImage] = useUploadImagesMutation();
 
-  const onImageChanger = (data: string[]) => {
+  const navigate = useNavigate();
+
+  const onImageChanger = (data: File[]) => {
     setImages(data);
   };
 
@@ -39,43 +42,44 @@ const AddFlat = () => {
 
   const handleSave = async () => {
     const data = {
-      description,
-      date_from: departure ? departure.toISOString() : null,
-      date_to: returnDate ? returnDate.toISOString() : null,
-      country: "",
-      city: "",
-      price,
-      comments,
+      description: description || "",
+      date_from: departure ? departure.toISOString() : "",
+      date_to: returnDate ? returnDate.toISOString() : "",
+      country: country || "",
+      city: city || "",
+      price: price || "",
+      comments: comments || "",
       is_rented: false,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       message_ids: "",
       channel_id: 0,
       status: "created",
-      district: "",
+      district: address || "",
       swap: "",
-      room: rooms,
+      room: rooms ? rooms.toString() : "",
       flexible_dates: true,
     };
 
-    const result = await addFlat(data);
+    try {
+      const result = await addFlat(data).unwrap();
+      console.log(result);
 
-    if (result.data) {
-      const imagesData = images.map((imageUrl, index) => ({
-        status: "used",
-        listing_id: result.data.channel_id,
-        listing_picture_id: index,
-        picture_url: imageUrl,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      }));
+      if (result.listing_id) {
+        const formData = new FormData();
+        images.forEach((file: File) => {
+          formData.append("files", file);
+        });
 
-      await uploadImage({ data: imagesData, id: result.data.channel_id });
-    }
+        await uploadImage({ data: formData, id: result.listing_id });
+
+        navigate("/account/myprofile");
+      }
+    } catch (error) {}
   };
 
   return (
-    <div className={`${clsx.wrapper}`}>
+    <div className={clsx.wrapper}>
       <SecondTitle style={{ fontWeight: "500", fontSize: "50px" }}>
         Add an advert
       </SecondTitle>
@@ -83,23 +87,26 @@ const AddFlat = () => {
         <SecondTitle>Photos of the apartment</SecondTitle>
         <div className={clsx.upload_item}>
           <Text>Upload no more than 8 photos of your apartment.</Text>
-          <Uploader onImageChanger={onImageChanger} />
+          <Uploader required onImageChanger={onImageChanger} />
         </div>
       </div>
       <div className={clsx.location}>
         <SecondTitle>Location</SecondTitle>
         <div>
           <Input
-            placeholder="Enter the district"
-            value={address}
+            required
+            placeholder="Enter the country"
+            value={country}
             onChange={(e) => setCountry(e.target.value)}
           />
           <Input
+            required
             placeholder="Enter the city"
-            value={address}
+            value={city}
             onChange={(e) => setCity(e.target.value)}
           />{" "}
           <Input
+            required
             placeholder="Enter the district"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
@@ -116,6 +123,7 @@ const AddFlat = () => {
         <SecondTitle>Departure date</SecondTitle>
         <div>
           <DatePicker
+            required
             selected={departure}
             onChange={(date) => setDeparture(date)}
             placeholderText="Select a date"
@@ -127,6 +135,7 @@ const AddFlat = () => {
         <SecondTitle>Return to the apartment</SecondTitle>
         <div>
           <DatePicker
+            required
             selected={returnDate}
             onChange={(date) => setReturnDate(date)}
             placeholderText="Select a date"
@@ -138,6 +147,7 @@ const AddFlat = () => {
         <SecondTitle>Description of the apartment</SecondTitle>
         <div>
           <TextArea
+            required
             placeholder="Enter a description of the apartment"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -158,6 +168,7 @@ const AddFlat = () => {
         </Text>
         <div>
           <Input
+            required
             placeholder="$/night"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
