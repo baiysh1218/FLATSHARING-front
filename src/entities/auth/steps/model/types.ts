@@ -8,7 +8,6 @@ export type AuthFormType = {
   is_superuser: boolean;
   is_verified: boolean;
   want_to_let: string;
-  img: any;
   is_accepted: boolean;
   firstName: string;
   lastName: string;
@@ -20,8 +19,18 @@ export type AuthFormType = {
 export interface StepProps {
   value?: string;
   formData: AuthFormType;
+  imageFiles?: File | null;
   handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleClickChange?: (inst: string, link: string) => void;
+  handleClickChange?: (
+    {
+      inst,
+      link,
+    }: {
+      inst: string;
+      link: string;
+    },
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => void | undefined;
   handleDrop?: (e: DragEvent<HTMLInputElement>) => void;
   passwordConfirm?: string;
   setPasswordConfirm?: (passwordConfirm: string) => void;

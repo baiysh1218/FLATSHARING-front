@@ -26,7 +26,6 @@ interface RegisterResponse {
   is_accepted: boolean;
 }
 
-
 const token = localStorage.getItem("token");
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -66,6 +65,17 @@ export const authApi = createApi({
     getUserById: builder.query({
       query: ({ id }) => `/user_infos/${id}`,
     }),
+    updateUserPicture: builder.mutation({
+      query: ({ data }) => {
+        console.log(data);
+
+        return {
+          url: "/user_infos/update_my_picture",
+          method: "PATCH",
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
@@ -75,4 +85,5 @@ export const {
   useEditUserInfoMutation,
   useGetUserQuery,
   useGetUserByIdQuery,
+  useUpdateUserPictureMutation,
 } = authApi;

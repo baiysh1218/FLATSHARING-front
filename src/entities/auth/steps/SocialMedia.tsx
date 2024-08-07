@@ -6,8 +6,9 @@ import { Text } from "../../../shared/Text/Text";
 import { Button } from "../../../shared/button/Button";
 
 const SocialMedia: FC<StepProps> = ({ formData, handleClickChange }) => {
-  const [inst, setInst] = useState<string>("");
-  const [link, setLink] = useState<string>("");
+  console.log(formData);
+  const [inst, setInst] = useState<string>(formData.instagram);
+  const [link, setLink] = useState<string>(formData.linkedin);
   return (
     <div className={styles.step2_wrapper}>
       <div style={{ marginTop: "0%" }} className={styles.step1_titles}>
@@ -35,12 +36,28 @@ const SocialMedia: FC<StepProps> = ({ formData, handleClickChange }) => {
           type="text"
           placeholder="Not added"
         />
-        <Button
-          $bg
-          style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}
-        >
-          Connect
-        </Button>
+        {formData.instagram ? (
+          <Button
+            $border
+            $iconColor
+            onClick={(e) => {
+              setInst("");
+              handleClickChange?.({ inst: "", link: link }, e);
+            }}
+            style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}
+          >
+            Remove
+          </Button>
+        ) : (
+          <Button
+            $bg
+            type="button"
+            onClick={(e) => handleClickChange?.({ inst: inst, link: link }, e)}
+            style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}
+          >
+            Connect
+          </Button>
+        )}
       </div>
       <div className={styles.one_input}>
         <SecondTitle fz="16px" style={{ width: "30%" }}>
@@ -52,12 +69,28 @@ const SocialMedia: FC<StepProps> = ({ formData, handleClickChange }) => {
           type="text"
           placeholder="Not added"
         />
-        <Button
-          $bg
-          style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}
-        >
-          Connect
-        </Button>
+        {formData.linkedin ? (
+          <Button
+            $border
+            $iconColor
+            onClick={(e) => {
+              setLink("");
+              handleClickChange?.({ inst: inst, link: "" }, e);
+            }}
+            style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}
+          >
+            Remove
+          </Button>
+        ) : (
+          <Button
+            $bg
+            type="button"
+            onClick={(e) => handleClickChange?.({ inst: inst, link: link }, e)}
+            style={{ padding: "2px 35px", fontSize: "16px", minHeight: "60px" }}
+          >
+            Connect
+          </Button>
+        )}
       </div>
     </div>
   );
