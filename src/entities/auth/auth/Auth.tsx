@@ -26,6 +26,7 @@ import {
   useGetUserQuery,
   useLoginMutation,
   useRegisterMutation,
+  useUpdateUserPictureMutation,
 } from "../../../app/redux/auth/authApi";
 import InputStep from "../steps/InputStep";
 import Complete from "../steps/Complete";
@@ -43,7 +44,6 @@ interface FormData {
   is_verified: boolean;
   is_accepted: boolean;
   want_to_let: string;
-  img: any;
   firstName: string;
   lastName: string;
   address: string;
@@ -66,7 +66,6 @@ const Auth: React.FC = () => {
     is_verified: false,
     is_accepted: false,
     want_to_let: "Yes",
-    img: "",
     firstName: "",
     lastName: "",
     address: "",
@@ -74,6 +73,8 @@ const Auth: React.FC = () => {
     instagram: "",
     linkedin: "",
   });
+  const [imageFiles, setImageFiles] = useState<File | null>(null);
+
   console.log(formData);
 
   const [currentStep, setCurrentStep] = useState<number>(() => {
@@ -90,6 +91,7 @@ const Auth: React.FC = () => {
 
   const [login, { data: tokens }] = useLoginMutation();
   const { data } = useGetUserQuery({});
+  const [imageUpdate] = useUpdateUserPictureMutation();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -97,36 +99,20 @@ const Auth: React.FC = () => {
     setCurrentStep(stepId);
   }, [location.search]);
 
-  const handleImageUpload = (file: File) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData((prevData) => ({
-        ...prevData,
-        img: reader.result as string,
-      }));
-    };
-    reader.readAsDataURL(file);
-  };
-
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files?.[0];
     if (file) {
-      handleImageUpload(file);
+      setImageFiles(file);
     }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const file = e.target.files?.[0];
+    console.log(file);
     if (file) {
-      //* вариант с файлом: отправляет но не отображает
-      //setFormData((prevData) => ({
-      //  ...prevData,
-      //  img: file,
-      //}));
-      console.log(file);
-      handleImageUpload(file);
+      setImageFiles(file);
     }
 
     setFormData((prevData) => ({
@@ -139,13 +125,24 @@ const Auth: React.FC = () => {
     }));
   };
 
-  const handleClickChange = (inst: string, link: string) => {
+  const handleClickChange = (
+    {
+      inst,
+      link,
+    }: {
+      inst: string;
+      link: string;
+    },
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
     if (inst) {
       setFormData((prevData) => ({
         ...prevData,
         ["instagram"]: inst,
       }));
-    } else if (link) {
+    }
+    if (link) {
       setFormData((prevData) => ({
         ...prevData,
         ["linkedin"]: link,
@@ -228,7 +225,7 @@ const Auth: React.FC = () => {
     }
   };
 
-  const handleEdit = async (handleNext: () => void) => {
+  const handleEdit = async () => {
     if (!validateStep()) return;
     const editedData = {
       full_name: `${formData.firstName} ${formData.lastName}`,
@@ -238,10 +235,9 @@ const Auth: React.FC = () => {
       onboarding_completed: false,
       tg_username: "",
       whatsapp: null,
-      instagram: null,
-      linkedin: null,
+      instagram: formData.instagram,
+      linkedin: formData.linkedin,
       description: formData.profession,
-      //picture_url: formData.img, //* файл не отображает, ссылка ввиде строки не отправляется
       picture_url: null,
       where_to_rent: formData.address,
       where_to_let: formData.want_to_let,
@@ -252,12 +248,17 @@ const Auth: React.FC = () => {
       bot_name: "",
       user_id: data.user_id,
     };
-    console.log(editedData.picture_url);
     try {
       const res = await edit({ user: editedData });
       console.log(res);
       if (res.data) {
-        handleNext();
+        const form = new FormData();
+        if (imageFiles) {
+          form.append("file", imageFiles);
+        }
+        const res3 = await imageUpdate({ data: form });
+        console.log(res3);
+        //navigate("/");
       }
     } catch (err) {}
   };
@@ -381,6 +382,7 @@ const Auth: React.FC = () => {
               formData={formData}
               handleChange={handleChange}
               handleDrop={handleDrop}
+              imageFiles={imageFiles}
             />
           </Main>
         );
@@ -446,7 +448,7 @@ const Auth: React.FC = () => {
             </Button>
           ) : currentStep == 9 ? (
             <>
-              {formData.img ? (
+              {imageFiles ? (
                 <Button $bg $icon type="button" onClick={handleNext}>
                   Join the community
                 </Button>
@@ -465,9 +467,7 @@ const Auth: React.FC = () => {
           ) : currentStep == 10 ? (
             <div style={{ display: "flex", flexDirection: "column" }}>
               <Button
-                onClick={() => {
-                  handleEdit(handleNext);
-                }}
+                onClick={handleNext}
                 style={{ marginBottom: "20px" }}
                 $bg
                 $icon
@@ -489,7 +489,7 @@ const Auth: React.FC = () => {
               </Text>
             </div>
           ) : (
-            <Button $bg $icon type="submit">
+            <Button onClick={() => handleEdit()} $bg $icon type="button">
               Save information
             </Button>
           )}

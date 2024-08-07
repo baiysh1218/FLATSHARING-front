@@ -9,6 +9,7 @@ const ImageUploader: FC<StepProps> = ({
   handleChange,
   handleDrop,
   name,
+  imageFiles,
 }) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
@@ -45,10 +46,10 @@ const ImageUploader: FC<StepProps> = ({
           eiusmod tempor incididunt ut labore.
         </Text>
       </div>
-      {formData.img ? (
+      {imageFiles ? (
         <img
           className={clsx.immages_uploader}
-          src={formData.img}
+          src={URL.createObjectURL(imageFiles)}
           alt="Uploaded Preview"
         />
       ) : (

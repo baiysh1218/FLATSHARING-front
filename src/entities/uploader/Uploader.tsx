@@ -9,6 +9,7 @@ interface Props {
 
 const Uploader: FC<Props> = ({ onImageChanger, required }) => {
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+  console.log(imageFiles);
 
   const handleImageUpload = (files: FileList) => {
     const newImageFiles: File[] = [];
