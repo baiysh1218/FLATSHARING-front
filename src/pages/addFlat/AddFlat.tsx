@@ -79,7 +79,10 @@ const AddFlat = () => {
 
   return (
     <div className={clsx.wrapper}>
-      <SecondTitle style={{ fontWeight: "500", fontSize: "50px" }}>
+      <SecondTitle
+        onClick={() => navigate("/add_apartmants")}
+        style={{ fontWeight: "500", fontSize: "50px" }}
+      >
         Add an advert
       </SecondTitle>
       <div className={clsx.upload}>
